@@ -2,7 +2,7 @@ from ..buildlib import build_wheels
 
 NAME = 'lazydocker'
 VERSION = '0.23.1'
-PYPI_VERSION = '0.0.1a1'
+PYPI_VERSION = '0.23.1'
 SUMMARY = "A thin wrapper to distribute https://github.com/jesseduffield/lazydocker via pip."
 LICENSE = "MIT"
 
