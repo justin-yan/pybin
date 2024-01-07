@@ -2,7 +2,7 @@ from ..buildlib import build_wheels
 
 NAME = 'dive'
 VERSION = '0.11.0'
-PYPI_VERSION = '0.0.1a1'
+PYPI_VERSION = '0.11.0'
 SUMMARY = "A thin wrapper to distribute https://github.com/wagoodman/dive via pip."
 LICENSE = "MIT"
 
