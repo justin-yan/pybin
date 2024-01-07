@@ -17,3 +17,9 @@ The core of the logic lies in the `buildlib.py` module.
 - Once all wheels are constructed, the distribution is uploaded to PyPI.
 
 CICD is configured to automatically recognize new *PyPI* releases by looking for a diff on the PYPI_VERSION.  When this happens, a build-and-release cycle is performed for that release version.
+
+## Catalog
+
+- `pip install dive-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/dive), [upstream source](https://github.com/wagoodman/dive)
+- `pip install just-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/just), [upstream source](https://github.com/casey/just)
+- `pip install lazydocker-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/lazydocker), [upstream source](https://github.com/jesseduffield/lazydocker)
