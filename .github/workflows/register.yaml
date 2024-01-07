@@ -1,0 +1,24 @@
+name: Register
+on:
+  push:
+    branches:
+      - main
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/iomorphic/image/cicd-py:latest
+      volumes:
+        - /usr/bin/docker:/usr/bin/docker
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: '2'
+
+      # Needed due to: https://github.com/actions/checkout/issues/766
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - env:
+          PYPI_USERNAME: __token__
+          PYPI_PASSWORD: ${{ secrets.PYPI_REGISTRY_KEY }}
+        run: just register
