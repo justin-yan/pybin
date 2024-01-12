@@ -2,7 +2,7 @@ from ..buildlib import build_wheels
 
 NAME = 'usql'
 VERSION = '0.17.5'
-PYPI_VERSION = '0.0.1a1'
+PYPI_VERSION = '0.17.5'
 SUMMARY = "A thin wrapper to distribute https://github.com/xo/usql via pip."
 LICENSE = "MIT"
 
