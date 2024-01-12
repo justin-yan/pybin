@@ -38,6 +38,7 @@ def convert_archive_to_wheel(
         platform_tag: str,
         summary: str,
         license: str,
+        compression_mode: str,
 ):
     distribution_name = f'{name}_bin'  # If wheel names have a hyphen, the RECORD file is placed in the wrong .dist-info directory resulting in invalid wheels.
     pypi_distribution_name = f'{name}-bin'
@@ -45,7 +46,7 @@ def convert_archive_to_wheel(
 
     # Extract the command binary
     datadir = f'{distribution_name}-{pypi_version}.data'
-    with tarfile.open(mode="r:gz", fileobj=io.BytesIO(archive)) as tar:
+    with tarfile.open(mode=f"r:{compression_mode}", fileobj=io.BytesIO(archive)) as tar:
         for entry in tar:
             if entry.isreg():
                 if entry.name.split('/')[-1] == f"{name}":
@@ -98,4 +99,5 @@ def build_wheels(
     for url, tag in url_tag_map.items():
         with urllib.request.urlopen(url) as response:
             archive = response.read()
-        convert_archive_to_wheel(name, pypi_version, archive, tag, summary, license)
+        compression_mode = url.split('.')[-1]
+        convert_archive_to_wheel(name, pypi_version, archive, tag, summary, license, compression_mode)

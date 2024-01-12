@@ -24,3 +24,4 @@ CICD is configured to automatically recognize new *PyPI* releases by looking for
 - `pip install just-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/just), [upstream source](https://github.com/casey/just)
 - `pip install lazydocker-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/lazydocker), [upstream source](https://github.com/jesseduffield/lazydocker)
 - `pip install scc-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/scc), [upstream source](https://github.com/boyter/scc)
+- `pip install usql-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/usql), [upstream source](https://github.com/xo/usql)
