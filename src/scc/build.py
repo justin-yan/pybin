@@ -2,7 +2,7 @@ from ..buildlib import build_wheels
 
 NAME = 'scc'
 VERSION = '3.2.0'
-PYPI_VERSION = '0.0.1a1'
+PYPI_VERSION = '3.2.0'
 SUMMARY = "A thin wrapper to distribute https://github.com/boyter/scc via pip."
 LICENSE = "The Unlicense (Unlicense)"
 
