@@ -23,3 +23,4 @@ CICD is configured to automatically recognize new *PyPI* releases by looking for
 - `pip install dive-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/dive), [upstream source](https://github.com/wagoodman/dive)
 - `pip install just-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/just), [upstream source](https://github.com/casey/just)
 - `pip install lazydocker-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/lazydocker), [upstream source](https://github.com/jesseduffield/lazydocker)
+- `pip install scc-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/scc), [upstream source](https://github.com/boyter/scc)
