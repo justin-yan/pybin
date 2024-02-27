@@ -5,6 +5,7 @@ import tarfile
 import urllib.request
 from email.message import EmailMessage
 from pathlib import Path
+from typing import Optional
 from zipfile import ZipInfo, ZIP_DEFLATED
 
 from wheel.wheelfile import WheelFile
@@ -38,7 +39,7 @@ def convert_archive_to_wheel(
         platform_tag: str,
         summary: str,
         license: str,
-        compression_mode: str,
+        compression_mode: Optional[str],
 ):
     distribution_name = f'{name}_bin'  # If wheel names have a hyphen, the RECORD file is placed in the wrong .dist-info directory resulting in invalid wheels.
     pypi_distribution_name = f'{name}-bin'
@@ -46,17 +47,22 @@ def convert_archive_to_wheel(
 
     # Extract the command binary
     datadir = f'{distribution_name}-{pypi_version}.data'
-    with tarfile.open(mode=f"r:{compression_mode}", fileobj=io.BytesIO(archive)) as tar:
-        for entry in tar:
-            if entry.isreg():
-                if entry.name.split('/')[-1] == f"{name}":
-                    source = tar.extractfile(entry).read()
-                    zip_info = ZipInfo(f'{datadir}/scripts/{name}', (2023,12,1,0,0,0))
-                    zip_info.external_attr = 0o100777 << 16  # This is needed to force filetype and permissions
-                    zip_info.file_size = len(source)
-                    zip_info.compress_type = ZIP_DEFLATED
-                    zip_info.create_system = 3
-                    contents[zip_info] = source
+    zip_info = ZipInfo(f'{datadir}/scripts/{name}', (2023,12,1,0,0,0))
+    zip_info.external_attr = 0o100777 << 16  # This is needed to force filetype and permissions
+    zip_info.compress_type = ZIP_DEFLATED
+    zip_info.create_system = 3
+
+    if compression_mode is not None:
+        with tarfile.open(mode=f"r:{compression_mode}", fileobj=io.BytesIO(archive)) as tar:
+            for entry in tar:
+                if entry.isreg():
+                    if entry.name.split('/')[-1] == f"{name}":
+                        source = tar.extractfile(entry).read()
+                        zip_info.file_size = len(source)
+                        contents[zip_info] = source
+    else:
+        zip_info.file_size = len(archive)
+        contents[zip_info] = archive
 
     # Create distinfo
     tag = f'py3-none-{platform_tag}'
@@ -100,4 +106,5 @@ def build_wheels(
         with urllib.request.urlopen(url) as response:
             archive = response.read()
         compression_mode = url.split('.')[-1]
+        compression_mode = compression_mode if compression_mode in ["gz", "bz2", "zip"] else None
         convert_archive_to_wheel(name, pypi_version, archive, tag, summary, license, compression_mode)
