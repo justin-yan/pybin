@@ -1,8 +1,8 @@
 from ..buildlib import build_wheels
 
 NAME = 'just'
-VERSION = '1.18.1'
-PYPI_VERSION = '1.18.1'
+VERSION = '1.24.0'
+PYPI_VERSION = '1.24.0'
 SUMMARY = "A thin wrapper to distribute https://github.com/casey/just via pip."
 LICENSE = "CC0 1.0 Universal"
 
