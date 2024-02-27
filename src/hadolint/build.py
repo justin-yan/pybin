@@ -2,7 +2,7 @@ from ..buildlib import build_wheels
 
 NAME = 'hadolint'
 VERSION = '2.12.0'
-PYPI_VERSION = '2.12.0a1'
+PYPI_VERSION = '2.12.0'
 SUMMARY = "A thin wrapper to distribute https://github.com/hadolint/hadolint via pip."
 LICENSE = "GPLv3"
 
