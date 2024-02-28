@@ -6,7 +6,7 @@ import urllib.request
 from email.message import EmailMessage
 from pathlib import Path
 from typing import Optional
-from zipfile import ZipInfo, ZIP_DEFLATED
+from zipfile import ZipInfo, ZIP_DEFLATED, ZipFile
 
 from wheel.wheelfile import WheelFile
 
@@ -52,7 +52,7 @@ def convert_archive_to_wheel(
     zip_info.compress_type = ZIP_DEFLATED
     zip_info.create_system = 3
 
-    if compression_mode is not None:
+    if compression_mode in ['gz', 'bz2']:  # TODO: technically should check for .tar.gz, etc.
         with tarfile.open(mode=f"r:{compression_mode}", fileobj=io.BytesIO(archive)) as tar:
             for entry in tar:
                 if entry.isreg():
@@ -60,6 +60,16 @@ def convert_archive_to_wheel(
                         source = tar.extractfile(entry).read()
                         zip_info.file_size = len(source)
                         contents[zip_info] = source
+    elif compression_mode in ['zip']:
+        with ZipFile(io.BytesIO(archive), 'r') as z:
+            binfilename = None
+            for file in z.namelist():
+                if file.split("/")[-1] == name:
+                    binfilename = file
+                    break
+            tbin = z.read(binfilename)  # TODO: error handling if file doesn't exist
+            zip_info.file_size = len(tbin)
+            contents[zip_info] = tbin
     else:
         zip_info.file_size = len(archive)
         contents[zip_info] = archive
