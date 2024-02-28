@@ -24,5 +24,6 @@ CICD is configured to automatically recognize new *PyPI* releases by looking for
 - `pip install hadolint-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/hadolint), [upstream source](https://github.com/hadolint/hadolint)
 - `pip install just-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/just), [upstream source](https://github.com/casey/just)
 - `pip install lazydocker-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/lazydocker), [upstream source](https://github.com/jesseduffield/lazydocker)
+- `pip install rclone-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/rclone), [upstream source](https://github.com/rclone/rclone)
 - `pip install scc-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/scc), [upstream source](https://github.com/boyter/scc)
 - `pip install usql-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/usql), [upstream source](https://github.com/xo/usql)
