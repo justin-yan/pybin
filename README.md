@@ -27,3 +27,4 @@ CICD is configured to automatically recognize new *PyPI* releases by looking for
 - `pip install rclone-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/rclone), [upstream source](https://github.com/rclone/rclone)
 - `pip install scc-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/scc), [upstream source](https://github.com/boyter/scc)
 - `pip install usql-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/usql), [upstream source](https://github.com/xo/usql)
+- `pip install dbmate-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/dbmate), [upstream source](https://github.com/amacneil/dbmate)
