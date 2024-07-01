@@ -2,7 +2,7 @@ from ..buildlib import build_wheels
 
 NAME = 'dbmate'
 VERSION = '2.17.0'
-PYPI_VERSION = '2.17.0'
+PYPI_VERSION = '2.17.0a1'
 SUMMARY = "A thin wrapper to distribute https://github.com/amacneil/dbmate via pip."
 LICENSE = "MIT"
 
