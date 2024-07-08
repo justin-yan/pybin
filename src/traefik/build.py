@@ -2,7 +2,7 @@ from ..buildlib import build_wheels
 
 NAME = 'traefik'
 VERSION = '3.0.4'
-PYPI_VERSION = '3.0.4'
+PYPI_VERSION = '3.0.4a1'
 SUMMARY = "A thin wrapper to distribute https://github.com/traefik/traefik via pip."
 LICENSE = "MIT"
 
