@@ -29,3 +29,4 @@ CICD is configured to automatically recognize new *PyPI* releases by looking for
 - `pip install usql-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/usql), [upstream source](https://github.com/xo/usql)
 - `pip install dbmate-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/dbmate), [upstream source](https://github.com/amacneil/dbmate)
 - `pip install traefik-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/traefik), [upstream source](https://github.com/traefik/traefik)
+- `pip install litestream-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/litestream), [upstream source](https://github.com/benbjohnson/litestream)
