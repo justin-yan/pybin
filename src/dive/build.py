@@ -1,9 +1,10 @@
 from ..buildlib import build_wheels
 
 NAME = 'dive'
+UPSTREAM_REPO = "https://github.com/wagoodman/dive"
 VERSION = '0.12.0'
 PYPI_VERSION = '0.12.0'
-SUMMARY = "A thin wrapper to distribute https://github.com/wagoodman/dive via pip."
+SUMMARY = f"A thin wrapper to distribute {UPSTREAM_REPO} via pip."
 LICENSE = "MIT"
 
 TARGET_TAG = {
@@ -12,7 +13,7 @@ TARGET_TAG = {
     'linux_amd64': 'manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64',
     'linux_arm64': 'manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64',
 }
-URL_TAG = {f"https://github.com/wagoodman/dive/releases/download/v{VERSION}/{NAME}_{VERSION}_{target}.tar.gz": tag for target, tag in TARGET_TAG.items()}
+URL_TAG = {f"{UPSTREAM_REPO}/releases/download/v{VERSION}/{NAME}_{VERSION}_{target}.tar.gz": tag for target, tag in TARGET_TAG.items()}
 
 
 if __name__ == "__main__":
