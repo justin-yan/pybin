@@ -4,7 +4,6 @@ NAME = 'caddy'
 UPSTREAM_REPO = "https://github.com/caddyserver/caddy"
 VERSION = '2.8.4'
 PYPI_VERSION = '2.8.4a1'
-SUMMARY = f"A thin wrapper to distribute {UPSTREAM_REPO} via pip."
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
@@ -21,6 +20,6 @@ if __name__ == "__main__":
         NAME,
         PYPI_VERSION,
         URL_TAG,
-        SUMMARY,
+        UPSTREAM_REPO,
         LICENSE,
         )

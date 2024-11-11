@@ -1,9 +1,9 @@
 from ..buildlib import build_wheels
 
 NAME = 'usql'
+UPSTREAM_REPO = 'https://github.com/xo/usql'
 VERSION = '0.17.5'
 PYPI_VERSION = '0.17.5'
-SUMMARY = "A thin wrapper to distribute https://github.com/xo/usql via pip."
 LICENSE = "MIT"
 
 TARGET_TAG = {
@@ -12,7 +12,7 @@ TARGET_TAG = {
     'linux-arm64': 'manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64',
     'linux-amd64': 'manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64',
 }
-URL_TAG = {f"https://github.com/xo/usql/releases/download/v{VERSION}/{NAME}-{VERSION}-{target}.tar.bz2": tag for target, tag in TARGET_TAG.items()}
+URL_TAG = {f"{UPSTREAM_REPO}/releases/download/v{VERSION}/{NAME}-{VERSION}-{target}.tar.bz2": tag for target, tag in TARGET_TAG.items()}
 
 
 if __name__ == "__main__":
@@ -20,6 +20,6 @@ if __name__ == "__main__":
         NAME,
         PYPI_VERSION,
         URL_TAG,
-        SUMMARY,
+        UPSTREAM_REPO,
         LICENSE,
         )

@@ -4,6 +4,8 @@ This project was inspired by how [Maturin packages rust binaries](https://www.ma
 
 Combined with Python's platform-specific wheels, this allows us to use pip as a "cross-platform package manager" for distributing single-binary CLI applications.
 
+This is the [list of tools bundled this way](https://github.com/justin-yan/pybin/tree/main/src), which can be installed with `pip install $TOOLNAME-bin`. 
+
 ## Wheel Building Process
 
 The core of the logic lies in the `buildlib.py` module.
@@ -17,17 +19,3 @@ The core of the logic lies in the `buildlib.py` module.
 - Once all wheels are constructed, the distribution is uploaded to PyPI.
 
 CICD is configured to automatically recognize new *PyPI* releases by looking for a diff on the PYPI_VERSION.  When this happens, a build-and-release cycle is performed for that release version.
-
-## Catalog
-
-- `pip install dive-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/dive), [upstream source](https://github.com/wagoodman/dive)
-- `pip install hadolint-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/hadolint), [upstream source](https://github.com/hadolint/hadolint)
-- `pip install just-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/just), [upstream source](https://github.com/casey/just)
-- `pip install lazydocker-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/lazydocker), [upstream source](https://github.com/jesseduffield/lazydocker)
-- `pip install rclone-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/rclone), [upstream source](https://github.com/rclone/rclone)
-- `pip install scc-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/scc), [upstream source](https://github.com/boyter/scc)
-- `pip install usql-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/usql), [upstream source](https://github.com/xo/usql)
-- `pip install dbmate-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/dbmate), [upstream source](https://github.com/amacneil/dbmate)
-- `pip install traefik-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/traefik), [upstream source](https://github.com/traefik/traefik)
-- `pip install litestream-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/litestream), [upstream source](https://github.com/benbjohnson/litestream)
-- `pip install fastfetch-bin`: [pybin version](https://github.com/justin-yan/pybin/tree/main/src/fastfetch), [upstream source](https://github.com/fastfetch-cli/fastfetch)

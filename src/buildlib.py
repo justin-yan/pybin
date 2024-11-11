@@ -1,4 +1,3 @@
-import argparse
 import io
 import os
 import tarfile
@@ -9,7 +8,6 @@ from typing import Optional
 from zipfile import ZipInfo, ZIP_DEFLATED, ZipFile
 
 from wheel.wheelfile import WheelFile
-
 
 
 def make_message(headers, payload=None):
@@ -108,13 +106,13 @@ def build_wheels(
         name: str,
         pypi_version: str,
         url_tag_map: dict,
-        summary: str,
-        license: str,
-    ):
-
+        upstream_repo_url: str,
+        license_name: str
+):
     for url, tag in url_tag_map.items():
         with urllib.request.urlopen(url) as response:
             archive = response.read()
         compression_mode = url.split('.')[-1]
         compression_mode = compression_mode if compression_mode in ["gz", "bz2", "zip"] else None
-        convert_archive_to_wheel(name, pypi_version, archive, tag, summary, license, compression_mode)
+        summary = f"A thin wrapper to distribute {upstream_repo_url} via pip."
+        convert_archive_to_wheel(name, pypi_version, archive, tag, summary, license_name, compression_mode)

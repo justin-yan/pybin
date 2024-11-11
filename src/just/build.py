@@ -1,9 +1,9 @@
 from ..buildlib import build_wheels
 
 NAME = 'just'
+UPSTREAM_REPO = 'https://github.com/casey/just'
 VERSION = '1.26.0'
 PYPI_VERSION = '1.26.0'
-SUMMARY = "A thin wrapper to distribute https://github.com/casey/just via pip."
 LICENSE = "CC0 1.0 Universal"
 
 TARGET_TAG = {
@@ -20,6 +20,6 @@ if __name__ == "__main__":
         NAME,
         PYPI_VERSION,
         URL_TAG,
-        SUMMARY,
+        UPSTREAM_REPO,
         LICENSE,
         )
