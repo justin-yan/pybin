@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'dbmate'
 UPSTREAM_REPO = 'https://github.com/amacneil/dbmate'
-VERSION = '2.17.0'
-PYPI_VERSION = '2.17.0'
+VERSION = '2.22.0'
+PYPI_VERSION = '2.22.0'
 LICENSE = "MIT"
 
 TARGET_TAG = {
