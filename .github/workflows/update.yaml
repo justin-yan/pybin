@@ -17,7 +17,7 @@ jobs:
       with:
         fetch-depth: '2'
     - name: Update
-      run: pipenv run python -m pybin.update
+      run: just update
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
