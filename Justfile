@@ -13,3 +13,6 @@
 
 @_register APP_NAME: init (build APP_NAME)
     pipenv run twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD {{APP_NAME}}-dist/*
+
+@update: init
+    pipenv run python -m pybin.update
