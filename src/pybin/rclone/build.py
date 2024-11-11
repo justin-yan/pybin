@@ -1,4 +1,4 @@
-from ..buildlib import build_wheels
+from pybin.buildlib import build_wheels
 
 NAME = 'rclone'
 UPSTREAM_REPO = 'https://github.com/rclone/rclone'

@@ -6,7 +6,7 @@
     PIPENV_VENV_IN_PROJECT=1 pipenv sync --dev
 
 @build APP_NAME: init
-    pipenv run python -m src.{{APP_NAME}}.build
+    pipenv run python -m pybin.{{APP_NAME}}.build
 
 @register:
     git diff --name-only HEAD^1 HEAD -G"^PYPI_VERSION =" "*build.py" | uniq | xargs -n1 dirname | xargs -n1 basename | xargs -I {} sh -c 'just _register {}'

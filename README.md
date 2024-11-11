@@ -4,7 +4,7 @@ This project was inspired by how [Maturin packages rust binaries](https://www.ma
 
 Combined with Python's platform-specific wheels, this allows us to use pip as a "cross-platform package manager" for distributing single-binary CLI applications.
 
-This is the [list of tools bundled this way](https://github.com/justin-yan/pybin/tree/main/src), which can be installed with `pip install $TOOLNAME-bin`. 
+This is the [list of tools bundled this way](https://github.com/justin-yan/pybin/tree/main/src/pybin), which can be installed with `pip install $TOOLNAME-bin`. 
 
 ## Wheel Building Process
 
