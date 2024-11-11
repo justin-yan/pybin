@@ -3,6 +3,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[packages]
+pybin = { editable = true, path = "." }
+
 [dev-packages]
 twine = ">3"
 

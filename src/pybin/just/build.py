@@ -1,4 +1,4 @@
-from ..buildlib import build_wheels
+from pybin.buildlib import build_wheels
 
 NAME = 'just'
 UPSTREAM_REPO = 'https://github.com/casey/just'
