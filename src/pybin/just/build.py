@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'just'
 UPSTREAM_REPO = 'https://github.com/casey/just'
-VERSION = '1.26.0'
-PYPI_VERSION = '1.26.0'
+VERSION = '1.36.0'
+PYPI_VERSION = '1.36.0'
 LICENSE = "CC0 1.0 Universal"
 
 TARGET_TAG = {
