@@ -3,7 +3,7 @@ from pybin.buildlib import build_wheels
 NAME = 'litestream'
 UPSTREAM_REPO = 'https://github.com/benbjohnson/litestream'
 VERSION = '0.3.13'
-PYPI_VERSION = '0.3.13a1'
+PYPI_VERSION = '0.3.13'
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
