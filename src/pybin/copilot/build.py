@@ -3,7 +3,7 @@ from pybin.buildlib import build_wheels
 NAME = 'copilot'
 UPSTREAM_REPO = "https://github.com/aws/copilot-cli"
 VERSION = '1.34.0'
-PYPI_VERSION = '1.34.0a1'
+PYPI_VERSION = '1.34.0'
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
