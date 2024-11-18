@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'gh'
 UPSTREAM_REPO = "https://github.com/cli/cli"
-VERSION = '2.61.0'
-PYPI_VERSION = '2.61.0'
+VERSION = '2.62.0'
+PYPI_VERSION = '2.62.0'
 LICENSE = "MIT"
 
 TARGET_TAG = {
