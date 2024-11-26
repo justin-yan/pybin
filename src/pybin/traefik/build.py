@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'traefik'
 UPSTREAM_REPO = 'https://github.com/traefik/traefik'
-VERSION = '3.2.0'
-PYPI_VERSION = '3.2.0'
+VERSION = '3.2.1'
+PYPI_VERSION = '3.2.1'
 LICENSE = "MIT"
 
 TARGET_TAG = {
