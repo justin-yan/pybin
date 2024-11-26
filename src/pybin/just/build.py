@@ -12,7 +12,7 @@ TARGET_TAG = {
     'x86_64-apple-darwin': 'macosx_10_9_x86_64',
     'x86_64-unknown-linux-musl': 'manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64',
 }
-URL_TAG = {f"https://github.com/casey/just/releases/download/{VERSION}/{NAME}-{VERSION}-{target}.tar.gz": tag for target, tag in TARGET_TAG.items()}
+URL_TAG = {f"{UPSTREAM_REPO}/releases/download/{VERSION}/{NAME}-{VERSION}-{target}.tar.gz": tag for target, tag in TARGET_TAG.items()}
 
 
 if __name__ == "__main__":
