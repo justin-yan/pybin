@@ -8,7 +8,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/iomorphic/image/cicd-py:latest
+      image: ghcr.io/iomorphic/image/cicd-py:0.0.2
       volumes:
         - /usr/bin/docker:/usr/bin/docker
     steps:
