@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'usql'
 UPSTREAM_REPO = 'https://github.com/xo/usql'
-VERSION = '0.19.16'
-PYPI_VERSION = '0.19.16'
+VERSION = '0.19.17'
+PYPI_VERSION = '0.19.17'
 LICENSE = "MIT"
 
 TARGET_TAG = {
