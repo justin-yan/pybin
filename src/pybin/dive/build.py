@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'dive'
 UPSTREAM_REPO = 'https://github.com/wagoodman/dive'
-VERSION = '0.12.0'
-PYPI_VERSION = '0.12.0'
+VERSION = '0.13.0'
+PYPI_VERSION = '0.13.0'
 LICENSE = "MIT"
 
 TARGET_TAG = {
