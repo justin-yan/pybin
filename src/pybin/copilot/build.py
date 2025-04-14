@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'copilot'
 UPSTREAM_REPO = "https://github.com/aws/copilot-cli"
-VERSION = '1.34.0'
-PYPI_VERSION = '1.34.0'
+VERSION = '1.34.1'
+PYPI_VERSION = '1.34.1'
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
