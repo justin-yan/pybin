@@ -35,6 +35,7 @@ def convert_archive_to_wheel(
         pypi_version: str,
         archive: bytes,
         platform_tag: str,
+        upstream_url: str,
         summary: str,
         license: str,
         compression_mode: Optional[str],
@@ -82,6 +83,16 @@ def convert_archive_to_wheel(
                 }
     with open('README.md') as f:
         description = f.read()
+    description = f"""# {name}-bin
+
+This project is part of the [pybin family of packages](https://github.com/justin-yan/pybin/tree/main/src/pybin), which are generally permissively-licensed binary tools that have been re-packaged to be distributable via python's PyPI infrastructure using `pip install $TOOLNAME-bin`.
+
+This is *not* affiliated with the upstream project found at {upstream_url}, and is merely a repackaging of their releases for installation through PyPI.  If an official installer is supported through PyPI, the corresponding package here will be deprecated.
+
+## Packaging Details
+
+This project was inspired by how [Maturin packages rust binaries](https://www.maturin.rs/bindings#bin).  The key observation is that in the wheel format, the [distribution-1.0.data/scripts/ directory is copied to bin](https://packaging.python.org/en/latest/specifications/binary-distribution-format/#installing-a-wheel-distribution-1-0-py32-none-any-whl), which means we can leverage this to seamlessly copy binaries onto a user's PATH.  Combined with Python's platform-specific wheels, this allows us to somehwat use pip as a "cross-platform package manager" for distributing single-binary CLI applications."""
+
     dist_info = f'{distribution_name}-{pypi_version}.dist-info'
     contents[f'{dist_info}/METADATA'] = make_message({
             'Metadata-Version': '2.1',
@@ -115,4 +126,4 @@ def build_wheels(
         compression_mode = url.split('.')[-1]
         compression_mode = compression_mode if compression_mode in ["gz", "bz2", "zip"] else None
         summary = f"A thin wrapper to distribute {upstream_repo_url} via pip."
-        convert_archive_to_wheel(name, pypi_version, archive, tag, summary, license_name, compression_mode)
+        convert_archive_to_wheel(name, pypi_version, archive, tag, upstream_repo_url, summary, license_name, compression_mode)
