@@ -89,6 +89,8 @@ This project is part of the [pybin family of packages](https://github.com/justin
 
 This is *not* affiliated with the upstream project found at {upstream_url}, and is merely a repackaging of their releases for installation through PyPI.  If an official installer is supported through PyPI, the corresponding package here will be deprecated.
 
+We attempt to reflect the license of the upstream tool on the releases in PyPI, but double-check at the upstream before use.
+
 ## Packaging Details
 
 This project was inspired by how [Maturin packages rust binaries](https://www.maturin.rs/bindings#bin).  The key observation is that in the wheel format, the [distribution-1.0.data/scripts/ directory is copied to bin](https://packaging.python.org/en/latest/specifications/binary-distribution-format/#installing-a-wheel-distribution-1-0-py32-none-any-whl), which means we can leverage this to seamlessly copy binaries onto a user's PATH.  Combined with Python's platform-specific wheels, this allows us to somehwat use pip as a "cross-platform package manager" for distributing single-binary CLI applications."""
