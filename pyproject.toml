@@ -7,6 +7,11 @@ name = "pybin"
 version = "0.0.1"
 requires-python = ">=3.10"
 
+[dependency-groups]
+dev = [
+    "twine>3"
+]
+
 [tool.setuptools]
 zip-safe = false
 
