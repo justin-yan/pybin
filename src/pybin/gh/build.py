@@ -3,7 +3,7 @@ from pybin.buildlib import build_wheels
 NAME = 'gh'
 UPSTREAM_REPO = "https://github.com/cli/cli"
 VERSION = '2.71.2'
-PYPI_VERSION = '2.71.2'
+PYPI_VERSION = '2.71.2a1'
 LICENSE = "MIT"
 
 TARGET_TAG = {
