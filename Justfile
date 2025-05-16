@@ -20,16 +20,16 @@ sync FORCE="noforce":
     if [ "{{FORCE}}" = "--force" ]  || [ "{{FORCE}}" = "-f" ]; then
         rm -rf {{justfile_directory()}}/.venv
     fi
-    uv sync --all-extras --frozen
+    uv sync --frozen
 
 @build APP_NAME: init
-    uv run --frozen python -m pybin.{{APP_NAME}}.build
+    uv run --no-sync python -m pybin.{{APP_NAME}}.build
 
 @register:
     git diff --name-only HEAD^1 HEAD -G"^PYPI_VERSION =" "*build.py" | uniq | xargs -n1 dirname | xargs -n1 basename | xargs -I {} sh -c 'just _register {}'
 
 @_register APP_NAME: init (build APP_NAME)
-    uv run --frozen twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD {{APP_NAME}}-dist/*
+    uv run --no-sync twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD {{APP_NAME}}-dist/*
 
 @update: init
-    uv run --frozen python -m pybin.update
+    uv run --no-sync python -m pybin.update
