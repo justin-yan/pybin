@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'rclone'
 UPSTREAM_REPO = 'https://github.com/rclone/rclone'
-VERSION = '1.69.3'
-PYPI_VERSION = '1.69.3'
+VERSION = '1.70.2'
+PYPI_VERSION = '1.70.2'
 LICENSE = "MIT"
 
 TARGET_TAG = {
