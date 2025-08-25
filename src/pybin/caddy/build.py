@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'caddy'
 UPSTREAM_REPO = "https://github.com/caddyserver/caddy"
-VERSION = '2.10.0'
-PYPI_VERSION = '2.10.0'
+VERSION = '2.10.2'
+PYPI_VERSION = '2.10.2'
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
