@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'fastfetch'
 UPSTREAM_REPO = "https://github.com/fastfetch-cli/fastfetch"
-VERSION = '2.50.2'
-PYPI_VERSION = '2.50.2'
+VERSION = '2.51.1'
+PYPI_VERSION = '2.51.1'
 LICENSE = "MIT"
 
 TARGET_TAG = {
