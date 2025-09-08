@@ -2,8 +2,8 @@ from pybin.buildlib import build_wheels
 
 NAME = 'hadolint'
 UPSTREAM_REPO = 'https://github.com/hadolint/hadolint'
-VERSION = '2.12.0'
-PYPI_VERSION = '2.12.0'
+VERSION = '2.13.1'
+PYPI_VERSION = '2.13.1'
 LICENSE = "GPLv3"
 
 TARGET_TAG = {
