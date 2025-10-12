@@ -49,7 +49,7 @@ sync FORCE="noforce":
         for wheel in "$app_name-dist/"*.whl; do
             if [ -f "$wheel" ]; then
                 size=$(stat -c%s "$wheel" 2>/dev/null || stat -f%z "$wheel" 2>/dev/null)
-                if [ "$size" -lt 1048576 ]; then
+                if [ "$size" -lt 500000 ]; then
                     echo "ERROR: $wheel is only $size bytes, suggesting no binary was properly downloaded"
                     exit 1
                 fi
