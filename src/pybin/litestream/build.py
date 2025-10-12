@@ -8,12 +8,12 @@ PYPI_VERSION = '0.5.0'
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
-    'darwin-arm64.zip': MACOS_ARM,
-    'linux-arm64.tar.gz': LINUX_ARM,
-    'darwin-amd64.zip': MACOS_X86,
-    'linux-amd64.tar.gz': LINUX_X86,
+    'darwin-arm64': MACOS_ARM,
+    'darwin-x86_64': MACOS_X86,
+    'linux-arm64': LINUX_ARM,
+    'linux-x86_64': LINUX_X86,
 }
-URL_TAG = {f"{UPSTREAM_REPO}/releases/download/v{VERSION}/{NAME}-V{VERSION}-{target}": tag for target, tag in TARGET_TAG.items()}
+URL_TAG = {f"{UPSTREAM_REPO}/releases/download/v{VERSION}/{NAME}-{VERSION}-{target}.tar.gz": tag for target, tag in TARGET_TAG.items()}
 
 
 if __name__ == "__main__":
