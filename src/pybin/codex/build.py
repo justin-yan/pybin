@@ -4,7 +4,7 @@ from pybin.platform_tags import *
 NAME = 'codex'
 UPSTREAM_REPO = "https://github.com/openai/codex"
 VERSION = '0.45.0'
-PYPI_VERSION = '0.45.0a1'
+PYPI_VERSION = '0.45.0a2'
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
