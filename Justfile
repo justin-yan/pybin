@@ -23,6 +23,7 @@ sync FORCE="noforce":
     uv sync --frozen
 
 @build APP_NAME: init
+    echo "Attempting to build {{APP_NAME}}"
     uv run --no-sync python -m pybin.{{APP_NAME}}.build
 
 @register:
@@ -33,3 +34,25 @@ sync FORCE="noforce":
 
 @update: init
     uv run --no-sync python -m pybin.update
+
+@validate: init
+    #!/usr/bin/env bash
+    set -ex
+    for dir in {{justfile_directory()}}/src/pybin/*/; do
+        app_name=$(basename "$dir")
+        if [ "$app_name" = "__pycache__" ] || [ ! -f "$dir/build.py" ]; then
+            continue
+        fi
+        echo "Validating $app_name..."
+        just build "$app_name"
+        # Install the Linux x86 wheel
+        wheel_file=$(ls "$app_name-dist/"*manylinux2014_x86_64*.whl 2>/dev/null | head -n1)
+        if [ -n "$wheel_file" ]; then
+            echo "Installing $wheel_file..."
+            uv pip install --force-reinstall "$wheel_file"
+        else
+            echo "Warning: No Linux x86 wheel found for $app_name"
+        fi
+        # Clean up dist folder
+        rm -rf "$app_name-dist"
+    done
