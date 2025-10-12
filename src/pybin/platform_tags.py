@@ -14,8 +14,12 @@ For linux: We use the `manylinux` tag instead of configuring a minimum glibc ver
 For mac: We use relatively old macos versions and have architecture-specific versions as well as the option for a mac universal binary
 """
 
-LINUX_X86 = "manylinux2014_x86_64.musllinux_1_1_x86_64"
-LINUX_ARM = "manylinux2014_aarch64.musllinux_1_1_aarch64"
+LINUX_GNU_X86 = "manylinux2014_x86_64"
+LINUX_GNU_ARM = "manylinux2014_aarch64"
+LINUX_MUSL_X86 = "musllinux_1_1_x86_64"
+LINUX_MUSL_ARM = "musllinux_1_1_aarch64"
+LINUX_X86 = ".".join([LINUX_GNU_X86, LINUX_MUSL_X86])
+LINUX_ARM = ".".join([LINUX_GNU_ARM, LINUX_MUSL_ARM])
 
 MACOS_X86 = "macosx_10_9_x86_64"
 MACOS_ARM = "macosx_11_0_arm64"  # Big Sur first version to support apple silicon
