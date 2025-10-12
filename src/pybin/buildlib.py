@@ -30,6 +30,15 @@ def write_wheel_file(filename, contents):
     return filename
 
 
+def identify_binary_file(file_name: str, name: str, download_url: str) -> bool:
+    # The vast majority of projects have a file whose name exactly matches the target.  There are some, such as openai/codex
+    #   where the binary is named something like codex-x86_64-unknown-linux-gnu.
+    # TODO: This is a pretty janky way of doing this, where it likely would be better served by some per-project configuration
+    #   to pick a binary naming scheme or something like that.  When this gets fixed, I can remove the download_url argument
+    #   for convert_archive_to_wheel as well.
+    return file_name == name or file_name == download_url.split("/")[-1].split('.')[0]
+
+
 def convert_archive_to_wheel(
         name: str,
         pypi_version: str,
@@ -39,6 +48,7 @@ def convert_archive_to_wheel(
         summary: str,
         license: str,
         compression_mode: Optional[str],
+        download_url: str  # TODO: this is a horrible hack for codex that I want to refactor at some point
 ):
     distribution_name = f'{name}_bin'  # If wheel names have a hyphen, the RECORD file is placed in the wrong .dist-info directory resulting in invalid wheels.
     pypi_distribution_name = f'{name}-bin'
@@ -55,7 +65,7 @@ def convert_archive_to_wheel(
         with tarfile.open(mode=f"r:{compression_mode}", fileobj=io.BytesIO(archive)) as tar:
             for entry in tar:
                 if entry.isreg():
-                    if entry.name.split('/')[-1] == f"{name}":
+                    if identify_binary_file(entry.name.split('/')[-1], name, download_url):
                         source = tar.extractfile(entry).read()
                         zip_info.file_size = len(source)
                         contents[zip_info] = source
@@ -63,7 +73,7 @@ def convert_archive_to_wheel(
         with ZipFile(io.BytesIO(archive), 'r') as z:
             binfilename = None
             for file in z.namelist():
-                if file.split("/")[-1] == name:
+                if identify_binary_file(file.split("/")[-1], name, download_url):
                     binfilename = file
                     break
             tbin = z.read(binfilename)  # TODO: error handling if file doesn't exist
@@ -72,6 +82,7 @@ def convert_archive_to_wheel(
     else:
         zip_info.file_size = len(archive)
         contents[zip_info] = archive
+    assert zip_info in contents, "Failed to identify a binary to pack into the wheel payload"
 
     # Create distinfo
     tag = f'py3-none-{platform_tag}'
@@ -81,8 +92,6 @@ def convert_archive_to_wheel(
                 'Requires-Python': '>=3.7',
                 'Project-URL': f'Repository, https://github.com/justin-yan/pybin',
                 }
-    with open('README.md') as f:
-        description = f.read()
     description = f"""# {name}-bin
 
 This project is part of the [pybin family of packages](https://github.com/justin-yan/pybin/tree/main/src/pybin), which are generally permissively-licensed binary tools that have been re-packaged to be distributable via python's PyPI infrastructure using `pip install $TOOLNAME-bin`.
@@ -128,4 +137,4 @@ def build_wheels(
         compression_mode = url.split('.')[-1]
         compression_mode = compression_mode if compression_mode in ["gz", "bz2", "zip"] else None
         summary = f"A thin wrapper to distribute {upstream_repo_url} via pip."
-        convert_archive_to_wheel(name, pypi_version, archive, tag, upstream_repo_url, summary, license_name, compression_mode)
+        convert_archive_to_wheel(name, pypi_version, archive, tag, upstream_repo_url, summary, license_name, compression_mode, url)

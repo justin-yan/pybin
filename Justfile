@@ -45,6 +45,17 @@ sync FORCE="noforce":
         fi
         echo "Validating $app_name..."
         just build "$app_name"
+
+        for wheel in "$app_name-dist/"*.whl; do
+            if [ -f "$wheel" ]; then
+                size=$(stat -c%s "$wheel" 2>/dev/null || stat -f%z "$wheel" 2>/dev/null)
+                if [ "$size" -lt 1048576 ]; then
+                    echo "ERROR: $wheel is only $size bytes, suggesting no binary was properly downloaded"
+                    exit 1
+                fi
+                echo "✓ $wheel is $(($size / 1048576))MB"
+            fi
+        done
         # Install the Linux x86 wheel
         wheel_file=$(ls "$app_name-dist/"*manylinux2014_x86_64*.whl 2>/dev/null | head -n1)
         if [ -n "$wheel_file" ]; then
