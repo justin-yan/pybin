@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'hadolint'
 UPSTREAM_REPO = 'https://github.com/hadolint/hadolint'
-VERSION = '2.13.1'
-PYPI_VERSION = '2.13.1'
+VERSION = '2.14.0'
+PYPI_VERSION = '2.14.0'
 LICENSE = "GPLv3"
 
 TARGET_TAG = {

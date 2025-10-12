@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'litestream'
 UPSTREAM_REPO = 'https://github.com/benbjohnson/litestream'
-VERSION = '0.3.13'
-PYPI_VERSION = '0.3.13'
+VERSION = '0.5.0'
+PYPI_VERSION = '0.5.0'
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
