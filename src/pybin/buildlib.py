@@ -67,6 +67,10 @@ def convert_archive_to_wheel(
                 if entry.isreg():
                     if identify_binary_file(entry.name.split('/')[-1], name, download_url):
                         source = tar.extractfile(entry).read()
+                        if len(source) < 1_000_000:  # file is less than approximately 1MB, a heuristic for skipping incorrect matches.
+                            # TODO: this is useful for fastfetch.  When there is a "pathspec" for extracting the binary from an archive,
+                            #   this filter should be removable.
+                            continue
                         zip_info.file_size = len(source)
                         contents[zip_info] = source
     elif compression_mode in ['zip']:
