@@ -87,7 +87,7 @@ def convert_archive_to_wheel(
 
 This project is part of the [pybin family of packages](https://github.com/justin-yan/pybin/tree/main/src/pybin), which are generally permissively-licensed binary tools that have been re-packaged to be distributable via python's PyPI infrastructure using `pip install $TOOLNAME-bin`.
 
-This is *not* affiliated with the upstream project found at {upstream_url}, and is merely a repackaging of their releases for installation through PyPI.  If an official installer is supported through PyPI, the corresponding package here will be deprecated.
+This is *not* affiliated with the upstream project found at {upstream_url}, and is merely a repackaging of their releases for installation through PyPI.  If the upstream project wants to officially release their tool on PyPI, please just reach out and we will happily transfer the project ownership over.
 
 We attempt to reflect the license of the upstream tool on the releases in PyPI, but double-check at the upstream before use.
 
