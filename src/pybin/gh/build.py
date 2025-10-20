@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'gh'
 UPSTREAM_REPO = "https://github.com/cli/cli"
-VERSION = '2.81.0'
-PYPI_VERSION = '2.81.0'
+VERSION = '2.82.0'
+PYPI_VERSION = '2.82.0'
 LICENSE = "MIT"
 
 TARGET_TAG = {
