@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'scc'
 UPSTREAM_REPO = 'https://github.com/boyter/scc'
-VERSION = '3.5.0'
-PYPI_VERSION = '3.5.0'
+VERSION = '3.6.0'
+PYPI_VERSION = '3.6.0'
 LICENSE = "The Unlicense (Unlicense)"
 
 TARGET_TAG = {
