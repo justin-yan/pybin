@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'temporal'
 UPSTREAM_REPO = "https://github.com/temporalio/cli"
-VERSION = '1.5.0'
-PYPI_VERSION = '1.5.0a1'
+VERSION = '1.5.1'
+PYPI_VERSION = '1.5.1a1'
 LICENSE = "MIT"
 
 TARGET_TAG = {
