@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'traefik'
 UPSTREAM_REPO = 'https://github.com/traefik/traefik'
-VERSION = '3.5.3'
-PYPI_VERSION = '3.5.3'
+VERSION = '3.6.0'
+PYPI_VERSION = '3.6.0'
 LICENSE = "MIT"
 
 TARGET_TAG = {
