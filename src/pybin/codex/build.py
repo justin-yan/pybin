@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'codex'
 UPSTREAM_REPO = "https://github.com/openai/codex"
-VERSION = 'rust-v0.57.0'
-PYPI_VERSION = 'rust-v0.57.0'
+VERSION = '0.57.0'
+PYPI_VERSION = '0.57.0'
 LICENSE = "Apache-2.0"
 
 TARGET_TAG = {
