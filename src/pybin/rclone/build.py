@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'rclone'
 UPSTREAM_REPO = 'https://github.com/rclone/rclone'
-VERSION = '1.71.2'
-PYPI_VERSION = '1.71.2'
+VERSION = '1.72.0'
+PYPI_VERSION = '1.72.0'
 LICENSE = "MIT"
 
 TARGET_TAG = {
