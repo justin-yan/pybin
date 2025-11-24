@@ -14,7 +14,6 @@ dependencies = [
 dev = [
     "twine>3",
     "pytest",
-    "hypothesis"
 ]
 
 [tool.setuptools]
