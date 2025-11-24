@@ -1,3 +1,4 @@
+import re
 import urllib.request
 import json
 from importlib.util import spec_from_file_location, module_from_spec
@@ -13,13 +14,23 @@ def project_list() -> list[Path]:
     ]
 
 
+def extract_version(tag: str) -> str:
+    # Look for MAJOR.MINOR.PATCH without prerelease/build metadata
+    # \d+\.\d+\.\d+ - capture the three numeric segments
+    match = re.search(r'\d+\.\d+\.\d+', tag)
+    if match:
+        return match.group(0)
+    raise ValueError(f"Could not extract MAJOR.MINOR.PATCH from tag: {tag!r}")
+
+
 def get_latest_version(upstream_url: str) -> str:
     repo, name = upstream_url.split("/")[-2:]
     with urllib.request.urlopen(
         f"https://api.github.com/repos/{repo}/{name}/releases/latest"
     ) as response:
         data = response.read().decode("utf-8")
-        return json.loads(data)["tag_name"].lstrip("v")
+        tag = json.loads(data)["tag_name"]
+        return extract_version(tag)
 
 
 def import_module_from_path(path: Path):

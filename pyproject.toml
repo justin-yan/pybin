@@ -12,7 +12,8 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "twine>3"
+    "twine>3",
+    "pytest",
 ]
 
 [tool.setuptools]
