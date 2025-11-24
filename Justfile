@@ -35,6 +35,9 @@ sync FORCE="noforce":
 @update: init
     uv run --no-sync python -m pybin.update
 
+@test:
+    uv run pytest --hypothesis-show-statistics tests
+
 @validate: init
     #!/usr/bin/env bash
     set -ex
