@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'just'
 UPSTREAM_REPO = 'https://github.com/casey/just'
-VERSION = '1.43.1'
-PYPI_VERSION = '1.43.1'
+VERSION = '1.45.0'
+PYPI_VERSION = '1.45.0'
 LICENSE = "CC0 1.0 Universal"
 
 TARGET_TAG = {
