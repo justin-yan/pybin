@@ -3,6 +3,7 @@ import os
 import tarfile
 import urllib.request
 from email.message import EmailMessage
+from email.policy import EmailPolicy
 from pathlib import Path
 from typing import Optional
 from zipfile import ZipInfo, ZIP_DEFLATED, ZipFile
@@ -11,7 +12,7 @@ from wheel.wheelfile import WheelFile
 
 
 def make_message(headers, payload=None):
-    msg = EmailMessage()
+    msg = EmailMessage(policy=EmailPolicy(max_line_length=0, utf8=True))
     for name, value in headers.items():
         if isinstance(value, list):
             for value_part in value:
