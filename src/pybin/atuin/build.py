@@ -4,7 +4,7 @@ from pybin.platform_tags import *
 NAME = 'atuin'
 UPSTREAM_REPO = "https://github.com/atuinsh/atuin"
 VERSION = '18.10.0'
-PYPI_VERSION = '18.10.0a1'
+PYPI_VERSION = '18.10.0'
 LICENSE = "MIT"
 
 TARGET_TAG = {
