@@ -1,6 +1,7 @@
 name: temporal
 upstream_repo: https://github.com/temporalio/cli
 version: "1.5.1"
+pypi_version: "1.5.1"
 license: MIT
 
 url_template: "{repo}/releases/download/v{version}/{name}_cli_{version}_{target}.tar.gz"

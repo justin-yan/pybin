@@ -1,6 +1,7 @@
 name: codex
 upstream_repo: https://github.com/openai/codex
 version: "0.72.0"
+pypi_version: "0.72.0"
 license: Apache-2.0
 
 url_template: "{repo}/releases/download/rust-v{version}/{name}-{target}.tar.gz"

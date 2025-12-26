@@ -73,7 +73,7 @@ def load_config(path: Path) -> ToolConfig:
         name=data["name"],
         upstream_repo=data["upstream_repo"],
         version=str(data["version"]),
-        pypi_version=str(data.get("pypi_version", data["version"])),
+        pypi_version=str(data["pypi_version"]),
         license=data["license"],
         url_template=data["url_template"],
         targets=data["targets"],

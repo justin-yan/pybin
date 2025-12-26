@@ -1,6 +1,7 @@
 name: hadolint
 upstream_repo: https://github.com/hadolint/hadolint
 version: "2.14.0"
+pypi_version: "2.14.0"
 license: GPLv3
 
 url_template: "{repo}/releases/download/v{version}/{name}-{target}"

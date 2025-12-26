@@ -1,6 +1,7 @@
 name: scc
 upstream_repo: https://github.com/boyter/scc
 version: "3.6.0"
+pypi_version: "3.6.0"
 license: The Unlicense (Unlicense)
 
 url_template: "{repo}/releases/download/v{version}/{name}_{target}.tar.gz"

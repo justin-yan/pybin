@@ -1,6 +1,7 @@
 name: copilot
 upstream_repo: https://github.com/aws/copilot-cli
 version: "1.34.1"
+pypi_version: "1.34.1"
 license: Apache-2.0
 
 url_template: "{repo}/releases/download/v{version}/{name}_{version}_{target}.tar.gz"

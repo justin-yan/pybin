@@ -1,6 +1,7 @@
 name: lazydocker
 upstream_repo: https://github.com/jesseduffield/lazydocker
 version: "0.24.2"
+pypi_version: "0.24.2"
 license: MIT
 
 url_template: "{repo}/releases/download/v{version}/{name}_{version}_{target}.tar.gz"
