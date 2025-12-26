@@ -10,6 +10,8 @@ from zipfile import ZipInfo, ZIP_DEFLATED, ZipFile
 
 from wheel.wheelfile import WheelFile
 
+from pybin.config import ToolConfig
+
 
 def make_message(headers, payload=None):
     msg = EmailMessage(policy=EmailPolicy(max_line_length=0, utf8=True))
@@ -143,3 +145,13 @@ def build_wheels(
         compression_mode = compression_mode if compression_mode in ["gz", "bz2", "zip"] else None
         summary = f"A thin wrapper to distribute {upstream_repo_url} via pip."
         convert_archive_to_wheel(name, pypi_version, archive, tag, upstream_repo_url, summary, license_name, compression_mode, url)
+
+
+def build_wheels_from_config(config: ToolConfig) -> None:
+    build_wheels(
+        config.name,
+        config.pypi_version,
+        config.get_url_tag_map(),
+        config.upstream_repo,
+        config.license,
+    )

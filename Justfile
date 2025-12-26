@@ -38,6 +38,67 @@ sync FORCE="noforce":
 @test:
     uv run pytest tests
 
+@build-yaml APP_NAME: init
+    echo "Building {{APP_NAME}} from YAML config"
+    uv run --no-sync python -m pybin.build_from_yaml tools/{{APP_NAME}}.yaml
+
+compare-build APP_NAME: init
+    #!/usr/bin/env bash
+    set -e
+    echo "=== Building {{APP_NAME}} using build.py (old) ==="
+    just build "{{APP_NAME}}"
+    mv "{{APP_NAME}}-dist" "{{APP_NAME}}-dist-old"
+
+    echo "=== Building {{APP_NAME}} using YAML config (new) ==="
+    just build-yaml "{{APP_NAME}}"
+    mv "{{APP_NAME}}-dist" "{{APP_NAME}}-dist-new"
+
+    echo "=== Comparing wheel files ==="
+    old_wheels=$(ls "{{APP_NAME}}-dist-old"/*.whl | xargs -n1 basename | sort)
+    new_wheels=$(ls "{{APP_NAME}}-dist-new"/*.whl | xargs -n1 basename | sort)
+
+    if [ "$old_wheels" != "$new_wheels" ]; then
+        echo "ERROR: Wheel filenames differ"
+        echo "Old: $old_wheels"
+        echo "New: $new_wheels"
+        exit 1
+    fi
+
+    all_match=true
+    for wheel in $old_wheels; do
+        old_size=$(stat -c%s "{{APP_NAME}}-dist-old/$wheel" 2>/dev/null || stat -f%z "{{APP_NAME}}-dist-old/$wheel")
+        new_size=$(stat -c%s "{{APP_NAME}}-dist-new/$wheel" 2>/dev/null || stat -f%z "{{APP_NAME}}-dist-new/$wheel")
+        if [ "$old_size" = "$new_size" ]; then
+            echo "✓ $wheel: sizes match ($old_size bytes)"
+        else
+            echo "✗ $wheel: sizes differ (old=$old_size, new=$new_size)"
+            all_match=false
+        fi
+    done
+
+    # Cleanup
+    rm -rf "{{APP_NAME}}-dist-old" "{{APP_NAME}}-dist-new"
+
+    if [ "$all_match" = true ]; then
+        echo "=== All wheels match! ==="
+    else
+        echo "=== Some wheels differ ==="
+        exit 1
+    fi
+
+compare-build-all: init
+    #!/usr/bin/env bash
+    set -e
+    for tool in caddy codex copilot dbmate dive fastfetch gh hadolint just lazydocker litestream rclone scc temporal traefik usql; do
+        echo "========================================"
+        echo "Testing: $tool"
+        echo "========================================"
+        just compare-build "$tool"
+    done
+    echo "========================================"
+    echo "ALL TOOLS PASSED"
+    echo "========================================"
+
 @validate: init
     #!/usr/bin/env bash
     set -ex
