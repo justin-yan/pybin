@@ -13,7 +13,6 @@ def extract_version(tag: str) -> str:
 
 
 def get_latest_version(upstream_url: str) -> str:
-    """Get the latest release version from a GitHub repo."""
     repo, name = upstream_url.split("/")[-2:]
     with urllib.request.urlopen(
         f"https://api.github.com/repos/{repo}/{name}/releases/latest"
@@ -24,7 +23,6 @@ def get_latest_version(upstream_url: str) -> str:
 
 
 def update_yaml_version(yaml_path: Path, old_version: str, new_version: str) -> None:
-    """Update version and pypi_version in a YAML file."""
     content = yaml_path.read_text()
     content = re.sub(
         rf'^(version:\s*["\']?){re.escape(old_version)}(["\']?)$',

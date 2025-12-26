@@ -1,56 +1,46 @@
-"""
-Tests to verify YAML configs produce equivalent URL/tag mappings
-to the existing build.py files.
-"""
-import pytest
 from pathlib import Path
-from importlib.util import spec_from_file_location, module_from_spec
 
-from pybin.config import load_config, load_all_configs
+import pytest
 
+from pybin.config import load_config, PLATFORM_TAG_MAP
 
 TOOLS_DIR = Path(__file__).parent.parent.parent / "tools"
-SRC_DIR = Path(__file__).parent.parent.parent / "src" / "pybin"
-
-
-def import_build_module(tool_name: str):
-    """Import a build.py module by tool name."""
-    build_path = SRC_DIR / tool_name / "build.py"
-    if not build_path.exists():
-        return None
-    spec = spec_from_file_location(f"{tool_name}_build", build_path)
-    module = module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def get_all_tool_names():
-    """Get list of tools that have both build.py and yaml config."""
-    tools = []
-    for yaml_file in TOOLS_DIR.glob("*.yaml"):
-        tool_name = yaml_file.stem
-        build_path = SRC_DIR / tool_name / "build.py"
-        if build_path.exists():
-            tools.append(tool_name)
-    return sorted(tools)
+    return sorted(f.stem for f in TOOLS_DIR.glob("*.yaml"))
 
 
 @pytest.mark.parametrize("tool_name", get_all_tool_names())
-def test_config_matches_build_py(tool_name: str):
-    """Verify YAML config matches build.py metadata and targets."""
+def test_config_loads_successfully(tool_name: str):
     config = load_config(TOOLS_DIR / f"{tool_name}.yaml")
-    build_module = import_build_module(tool_name)
-    assert build_module is not None, f"No build.py found for {tool_name}"
+    assert config.name == tool_name
+    assert config.version
+    assert config.pypi_version
+    assert config.upstream_repo.startswith("https://github.com/")
+    assert config.license
+    assert config.url_template
+    assert config.targets
 
-    # Metadata
-    assert config.name == build_module.NAME
-    assert config.version == build_module.VERSION
-    assert config.pypi_version == build_module.PYPI_VERSION
-    assert config.upstream_repo == build_module.UPSTREAM_REPO
-    assert config.license == build_module.LICENSE
 
-    # Targets
-    assert config.get_resolved_targets() == build_module.TARGET_TAG
+@pytest.mark.parametrize("tool_name", get_all_tool_names())
+def test_config_targets_resolve(tool_name: str):
+    config = load_config(TOOLS_DIR / f"{tool_name}.yaml")
+    resolved = config.get_resolved_targets()
 
-    # URL generation
-    assert config.get_url_tag_map() == build_module.URL_TAG
+    # All targets should resolve to known platform tags
+    for target, platform_name in config.targets.items():
+        assert platform_name in PLATFORM_TAG_MAP, f"Unknown platform: {platform_name}"
+        assert target in resolved
+
+
+@pytest.mark.parametrize("tool_name", get_all_tool_names())
+def test_config_url_generation(tool_name: str):
+    config = load_config(TOOLS_DIR / f"{tool_name}.yaml")
+    url_tag_map = config.get_url_tag_map()
+
+    assert len(url_tag_map) == len(config.targets)
+    for url, tag in url_tag_map.items():
+        assert url.startswith("https://")
+        assert config.version in url
+        assert tag  # Platform tag should not be empty

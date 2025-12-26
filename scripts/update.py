@@ -1,4 +1,3 @@
-"""Update tool versions from upstream GitHub releases."""
 import sys
 from pathlib import Path
 

@@ -1,4 +1,3 @@
-"""Build wheels from a YAML config file."""
 import sys
 from pathlib import Path
 
