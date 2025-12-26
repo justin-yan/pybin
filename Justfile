@@ -40,7 +40,7 @@ sync FORCE="noforce":
 
 @build-yaml APP_NAME: init
     echo "Building {{APP_NAME}} from YAML config"
-    uv run --no-sync python -m pybin.build_from_yaml tools/{{APP_NAME}}.yaml
+    uv run --no-sync python scripts/build_from_yaml.py tools/{{APP_NAME}}.yaml
 
 compare-build APP_NAME: init
     #!/usr/bin/env bash
