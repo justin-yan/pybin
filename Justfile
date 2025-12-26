@@ -23,11 +23,16 @@ sync FORCE="noforce":
     uv sync --frozen
 
 @build APP_NAME: init
-    echo "Attempting to build {{APP_NAME}}"
+    echo "Building {{APP_NAME}} from YAML config"
+    uv run --no-sync python scripts/build_from_yaml.py tools/{{APP_NAME}}.yaml
+
+# Legacy build using build.py scripts (for conformance testing)
+@_build-legacy APP_NAME: init
+    echo "Building {{APP_NAME}} using legacy build.py"
     uv run --no-sync python -m pybin.{{APP_NAME}}.build
 
 @register:
-    git diff --name-only HEAD^1 HEAD -G"^PYPI_VERSION =" "*build.py" | uniq | xargs -n1 dirname | xargs -n1 basename | xargs -I {} sh -c 'just _register {}'
+    git diff --name-only HEAD^1 HEAD -G"^pypi_version:" "tools/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just _register {}'
 
 @_register APP_NAME: init (build APP_NAME)
     uv run --no-sync twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD {{APP_NAME}}-dist/*
@@ -38,19 +43,15 @@ sync FORCE="noforce":
 @test:
     uv run pytest tests
 
-@build-yaml APP_NAME: init
-    echo "Building {{APP_NAME}} from YAML config"
-    uv run --no-sync python scripts/build_from_yaml.py tools/{{APP_NAME}}.yaml
-
 compare-build APP_NAME: init
     #!/usr/bin/env bash
     set -e
-    echo "=== Building {{APP_NAME}} using build.py (old) ==="
-    just build "{{APP_NAME}}"
+    echo "=== Building {{APP_NAME}} using build.py (legacy) ==="
+    just _build-legacy "{{APP_NAME}}"
     mv "{{APP_NAME}}-dist" "{{APP_NAME}}-dist-old"
 
     echo "=== Building {{APP_NAME}} using YAML config (new) ==="
-    just build-yaml "{{APP_NAME}}"
+    just build "{{APP_NAME}}"
     mv "{{APP_NAME}}-dist" "{{APP_NAME}}-dist-new"
 
     echo "=== Comparing wheel files ==="
@@ -102,11 +103,8 @@ compare-build-all: init
 @validate: init
     #!/usr/bin/env bash
     set -ex
-    for dir in {{justfile_directory()}}/src/pybin/*/; do
-        app_name=$(basename "$dir")
-        if [ "$app_name" = "__pycache__" ] || [ ! -f "$dir/build.py" ]; then
-            continue
-        fi
+    for yaml_file in {{justfile_directory()}}/tools/*.yaml; do
+        app_name=$(basename "$yaml_file" .yaml)
         echo "Validating $app_name..."
         just build "$app_name"
 
