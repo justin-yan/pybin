@@ -34,6 +34,7 @@ class ToolConfig:
     name: str
     upstream_repo: str
     version: str
+    pypi_version: str
     license: str
     url_template: str
     targets: dict[str, str]  # target suffix -> symbolic platform name
@@ -72,6 +73,7 @@ def load_config(path: Path) -> ToolConfig:
         name=data["name"],
         upstream_repo=data["upstream_repo"],
         version=str(data["version"]),
+        pypi_version=str(data.get("pypi_version", data["version"])),
         license=data["license"],
         url_template=data["url_template"],
         targets=data["targets"],

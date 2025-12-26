@@ -45,6 +45,7 @@ def test_config_matches_build_py(tool_name: str):
     # Metadata
     assert config.name == build_module.NAME
     assert config.version == build_module.VERSION
+    assert config.pypi_version == build_module.PYPI_VERSION
     assert config.upstream_repo == build_module.UPSTREAM_REPO
     assert config.license == build_module.LICENSE
 
