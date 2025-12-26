@@ -1,0 +1,12 @@
+name: caddy
+upstream_repo: https://github.com/caddyserver/caddy
+version: "2.10.2"
+license: Apache-2.0
+
+url_template: "{repo}/releases/download/v{version}/{name}_{version}_{target}.tar.gz"
+
+targets:
+  mac_arm64: macos_arm
+  mac_amd64: macos_x86
+  linux_arm64: linux_arm
+  linux_amd64: linux_x86

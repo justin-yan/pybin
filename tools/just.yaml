@@ -1,0 +1,12 @@
+name: just
+upstream_repo: https://github.com/casey/just
+version: "1.45.0"
+license: CC0 1.0 Universal
+
+url_template: "{repo}/releases/download/{version}/{name}-{version}-{target}.tar.gz"
+
+targets:
+  aarch64-apple-darwin: macos_arm
+  x86_64-apple-darwin: macos_x86
+  aarch64-unknown-linux-musl: linux_arm
+  x86_64-unknown-linux-musl: linux_x86

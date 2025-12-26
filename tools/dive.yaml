@@ -1,0 +1,12 @@
+name: dive
+upstream_repo: https://github.com/wagoodman/dive
+version: "0.13.1"
+license: MIT
+
+url_template: "{repo}/releases/download/v{version}/{name}_{version}_{target}.tar.gz"
+
+targets:
+  darwin_arm64: macos_arm
+  darwin_amd64: macos_x86
+  linux_arm64: linux_arm
+  linux_amd64: linux_x86

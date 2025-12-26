@@ -1,0 +1,12 @@
+name: litestream
+upstream_repo: https://github.com/benbjohnson/litestream
+version: "0.5.3"
+license: Apache-2.0
+
+url_template: "{repo}/releases/download/v{version}/{name}-{version}-{target}.tar.gz"
+
+targets:
+  darwin-arm64: macos_arm
+  darwin-x86_64: macos_x86
+  linux-arm64: linux_arm
+  linux-x86_64: linux_x86

@@ -1,0 +1,12 @@
+name: lazydocker
+upstream_repo: https://github.com/jesseduffield/lazydocker
+version: "0.24.2"
+license: MIT
+
+url_template: "{repo}/releases/download/v{version}/{name}_{version}_{target}.tar.gz"
+
+targets:
+  Darwin_arm64: macos_arm
+  Darwin_x86_64: macos_x86
+  Linux_arm64: linux_arm
+  Linux_x86_64: linux_x86

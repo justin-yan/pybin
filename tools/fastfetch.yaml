@@ -1,0 +1,12 @@
+name: fastfetch
+upstream_repo: https://github.com/fastfetch-cli/fastfetch
+version: "2.56.0"
+license: MIT
+
+url_template: "{repo}/releases/download/{version}/{name}-{target}.tar.gz"
+
+targets:
+  macos-aarch64: macos_arm
+  macos-amd64: macos_x86
+  linux-aarch64: linux_arm
+  linux-amd64: linux_x86
