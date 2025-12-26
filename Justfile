@@ -38,7 +38,7 @@ sync FORCE="noforce":
     uv run --no-sync twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD {{APP_NAME}}-dist/*
 
 @update: init
-    uv run --no-sync python -m pybin.update
+    uv run --no-sync python scripts/update.py {{justfile_directory()}}/tools
 
 @test:
     uv run pytest tests
