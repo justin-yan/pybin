@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'lazydocker'
 UPSTREAM_REPO = 'https://github.com/jesseduffield/lazydocker'
-VERSION = '0.24.2'
-PYPI_VERSION = '0.24.2'
+VERSION = '0.24.3'
+PYPI_VERSION = '0.24.3'
 LICENSE = "MIT"
 
 TARGET_TAG = {

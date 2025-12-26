@@ -3,8 +3,8 @@ from pybin.platform_tags import *
 
 NAME = 'fastfetch'
 UPSTREAM_REPO = "https://github.com/fastfetch-cli/fastfetch"
-VERSION = '2.56.0'
-PYPI_VERSION = '2.56.0'
+VERSION = '2.56.1'
+PYPI_VERSION = '2.56.1'
 LICENSE = "MIT"
 
 TARGET_TAG = {
