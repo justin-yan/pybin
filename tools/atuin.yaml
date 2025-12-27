@@ -1,10 +1,10 @@
-name: codex
-upstream_repo: https://github.com/openai/codex
-version: "0.77.0"
-pypi_version: "0.77.0"
-license: Apache-2.0
+name: atuin
+upstream_repo: https://github.com/atuinsh/atuin
+version: "18.10.0"
+pypi_version: "18.10.0"
+license: MIT
 
-url_template: "{repo}/releases/download/rust-v{version}/{name}-{target}.tar.gz"
+url_template: "{repo}/releases/download/v{version}/{name}-{target}.tar.gz"
 
 targets:
   aarch64-apple-darwin: macos_arm
