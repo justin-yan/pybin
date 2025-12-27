@@ -27,7 +27,7 @@ sync FORCE="noforce":
     uv run --no-sync python scripts/build_from_yaml.py tools/{{APP_NAME}}.yaml
 
 @register:
-    git diff --name-only HEAD^1 HEAD -G"^pypi_version:" "tools/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'echo {}'
+    git diff --name-only HEAD^1 HEAD -G"^pypi_version:" "tools/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just _register {}'
 
 @_register APP_NAME: init (build APP_NAME)
     uv run --no-sync twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD {{APP_NAME}}-dist/*
