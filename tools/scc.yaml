@@ -1,0 +1,13 @@
+name: scc
+upstream_repo: https://github.com/boyter/scc
+version: "3.6.0"
+pypi_version: "3.6.0"
+license: The Unlicense (Unlicense)
+
+url_template: "{repo}/releases/download/v{version}/{name}_{target}.tar.gz"
+
+targets:
+  Darwin_arm64: macos_arm
+  Darwin_x86_64: macos_x86
+  Linux_arm64: linux_arm
+  Linux_x86_64: linux_x86

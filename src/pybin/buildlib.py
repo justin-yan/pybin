@@ -10,6 +10,8 @@ from zipfile import ZipInfo, ZIP_DEFLATED, ZipFile
 
 from wheel.wheelfile import WheelFile
 
+from pybin.config import ToolConfig
+
 
 def make_message(headers, payload=None):
     msg = EmailMessage(policy=EmailPolicy(max_line_length=0, utf8=True))
@@ -99,7 +101,7 @@ def convert_archive_to_wheel(
                 }
     description = f"""# {name}-bin
 
-This project is part of the [pybin family of packages](https://github.com/justin-yan/pybin/tree/main/src/pybin), which are generally permissively-licensed binary tools that have been re-packaged to be distributable via python's PyPI infrastructure using `pip install $TOOLNAME-bin`.
+This project is part of the [pybin family of packages](https://github.com/justin-yan/pybin/tree/main/tools), which are generally permissively-licensed binary tools that have been re-packaged to be distributable via python's PyPI infrastructure using `pip install $TOOLNAME-bin`.
 
 This is *not* affiliated with the upstream project found at {upstream_url}, and is merely a repackaging of their releases for installation through PyPI.  If the upstream project wants to officially release their tool on PyPI, please just reach out and we will happily transfer the project ownership over.
 
@@ -143,3 +145,13 @@ def build_wheels(
         compression_mode = compression_mode if compression_mode in ["gz", "bz2", "zip"] else None
         summary = f"A thin wrapper to distribute {upstream_repo_url} via pip."
         convert_archive_to_wheel(name, pypi_version, archive, tag, upstream_repo_url, summary, license_name, compression_mode, url)
+
+
+def build_wheels_from_config(config: ToolConfig) -> None:
+    build_wheels(
+        config.name,
+        config.pypi_version,
+        config.get_url_tag_map(),
+        config.upstream_repo,
+        config.license,
+    )

@@ -1,0 +1,13 @@
+name: rclone
+upstream_repo: https://github.com/rclone/rclone
+version: "1.72.1"
+pypi_version: "1.72.1"
+license: MIT
+
+url_template: "{repo}/releases/download/v{version}/{name}-v{version}-{target}.zip"
+
+targets:
+  osx-arm64: macos_arm
+  osx-amd64: macos_x86
+  linux-arm: linux_arm
+  linux-amd64: linux_x86

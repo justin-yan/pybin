@@ -1,0 +1,13 @@
+name: dbmate
+upstream_repo: https://github.com/amacneil/dbmate
+version: "2.28.0"
+pypi_version: "2.28.0"
+license: MIT
+
+url_template: "{repo}/releases/download/v{version}/{name}-{target}"
+
+targets:
+  macos-arm64: macos_arm
+  macos-amd64: macos_x86
+  linux-arm64: linux_arm
+  linux-amd64: linux_x86

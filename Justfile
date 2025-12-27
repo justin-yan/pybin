@@ -23,17 +23,17 @@ sync FORCE="noforce":
     uv sync --frozen
 
 @build APP_NAME: init
-    echo "Attempting to build {{APP_NAME}}"
-    uv run --no-sync python -m pybin.{{APP_NAME}}.build
+    echo "Building {{APP_NAME}}"
+    uv run --no-sync python scripts/build_from_yaml.py tools/{{APP_NAME}}.yaml
 
 @register:
-    git diff --name-only HEAD^1 HEAD -G"^PYPI_VERSION =" "*build.py" | uniq | xargs -n1 dirname | xargs -n1 basename | xargs -I {} sh -c 'just _register {}'
+    git diff --name-only HEAD^1 HEAD -G"^pypi_version:" "tools/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'echo {}'
 
 @_register APP_NAME: init (build APP_NAME)
     uv run --no-sync twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD {{APP_NAME}}-dist/*
 
 @update: init
-    uv run --no-sync python -m pybin.update
+    uv run --no-sync python scripts/update.py {{justfile_directory()}}/tools
 
 @test:
     uv run pytest tests
@@ -41,11 +41,8 @@ sync FORCE="noforce":
 @validate: init
     #!/usr/bin/env bash
     set -ex
-    for dir in {{justfile_directory()}}/src/pybin/*/; do
-        app_name=$(basename "$dir")
-        if [ "$app_name" = "__pycache__" ] || [ ! -f "$dir/build.py" ]; then
-            continue
-        fi
+    for yaml_file in {{justfile_directory()}}/tools/*.yaml; do
+        app_name=$(basename "$yaml_file" .yaml)
         echo "Validating $app_name..."
         just build "$app_name"
 

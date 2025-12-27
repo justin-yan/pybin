@@ -1,0 +1,15 @@
+name: codex
+upstream_repo: https://github.com/openai/codex
+version: "0.77.0"
+pypi_version: "0.77.0"
+license: Apache-2.0
+
+url_template: "{repo}/releases/download/rust-v{version}/{name}-{target}.tar.gz"
+
+targets:
+  aarch64-apple-darwin: macos_arm
+  x86_64-apple-darwin: macos_x86
+  aarch64-unknown-linux-gnu: linux_gnu_arm
+  aarch64-unknown-linux-musl: linux_musl_arm
+  x86_64-unknown-linux-gnu: linux_gnu_x86
+  x86_64-unknown-linux-musl: linux_musl_x86

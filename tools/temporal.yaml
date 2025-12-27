@@ -1,0 +1,13 @@
+name: temporal
+upstream_repo: https://github.com/temporalio/cli
+version: "1.5.1"
+pypi_version: "1.5.1"
+license: MIT
+
+url_template: "{repo}/releases/download/v{version}/{name}_cli_{version}_{target}.tar.gz"
+
+targets:
+  darwin_arm64: macos_arm
+  darwin_amd64: macos_x86
+  linux_arm64: linux_arm
+  linux_amd64: linux_x86
