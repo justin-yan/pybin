@@ -1,7 +1,7 @@
 name: just
 upstream_repo: https://github.com/casey/just
-version: "1.45.0"
-pypi_version: "1.45.0"
+version: "1.46.0"
+pypi_version: "1.46.0"
 license: CC0 1.0 Universal
 
 url_template: "{repo}/releases/download/{version}/{name}-{version}-{target}.tar.gz"
