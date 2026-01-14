@@ -67,3 +67,17 @@ sync FORCE="noforce":
         # Clean up dist folder
         rm -rf "$app_name-dist"
     done
+
+@docker-build APP_NAME: init
+    echo "Building Docker image for {{APP_NAME}}"
+    uv run --no-sync python scripts/build_docker.py tools/{{APP_NAME}}.yaml
+
+@docker-push APP_NAME: init
+    echo "Building and pushing Docker image for {{APP_NAME}}"
+    uv run --no-sync python scripts/build_docker.py tools/{{APP_NAME}}.yaml --push
+
+@docker-register:
+    git diff --name-only HEAD^1 HEAD -G"^pypi_version:" "tools/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just _docker-register {}'
+
+@_docker-register APP_NAME: init (docker-push APP_NAME)
+    echo "Registered Docker image for {{APP_NAME}}"

@@ -63,6 +63,26 @@ class ToolConfig:
             for target, tag in self.get_resolved_targets().items()
         }
 
+    def get_docker_targets(self) -> dict[str, str]:
+        """Get Linux targets mapped to Docker architectures.
+
+        Returns: dict mapping Docker arch (e.g., "linux/amd64") to download URL
+        """
+        from pybin.docker_tags import DOCKER_ARCH_MAP
+
+        docker_targets = {}
+        for target, platform_name in self.targets.items():
+            docker_arch = DOCKER_ARCH_MAP.get(platform_name)
+            if docker_arch:
+                url = self.url_template.format(
+                    repo=self.upstream_repo,
+                    version=self.version,
+                    name=self.name,
+                    target=target,
+                )
+                docker_targets[docker_arch] = url
+        return docker_targets
+
 
 def load_config(path: Path) -> ToolConfig:
     """Load a single tool config from a YAML file."""
