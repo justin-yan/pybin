@@ -38,6 +38,17 @@ sync FORCE="noforce":
 @test:
     uv run pytest tests
 
+@docker-build APP_NAME: init
+    echo "Building Docker image for {{APP_NAME}}"
+    uv run --no-sync python scripts/build_docker.py tools/{{APP_NAME}}.yaml
+
+@docker-push APP_NAME: init
+    echo "Building and pushing Docker image for {{APP_NAME}}"
+    uv run --no-sync python scripts/build_docker.py --push tools/{{APP_NAME}}.yaml
+
+@docker-register:
+    git diff --name-only HEAD^1 HEAD -G"^pypi_version:" "tools/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just docker-push {}'
+
 @validate: init
     #!/usr/bin/env bash
     set -ex
