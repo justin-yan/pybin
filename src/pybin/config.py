@@ -28,6 +28,16 @@ PLATFORM_TAG_MAP = {
     "macos_universal": MACOS_UNIVERSAL,
 }
 
+# Map symbolic names to Docker platform strings (Linux only)
+DOCKER_PLATFORM_MAP = {
+    "linux_arm": "linux/arm64",
+    "linux_x86": "linux/amd64",
+    "linux_gnu_arm": "linux/arm64",
+    "linux_gnu_x86": "linux/amd64",
+    "linux_musl_arm": "linux/arm64",
+    "linux_musl_x86": "linux/amd64",
+}
+
 
 @dataclass
 class ToolConfig:
@@ -62,6 +72,29 @@ class ToolConfig:
             ): tag
             for target, tag in self.get_resolved_targets().items()
         }
+
+    def get_docker_targets(self) -> dict[str, tuple[str, str]]:
+        """Generate Docker platform -> (download_url, target_name) mapping.
+
+        Only returns Linux targets since Docker containers are Linux-based.
+        """
+        result = {}
+        for target, platform_name in self.targets.items():
+            docker_platform = DOCKER_PLATFORM_MAP.get(platform_name)
+            if docker_platform is None:
+                # Skip non-Linux platforms (macOS, etc.)
+                continue
+            # Skip if we already have this docker platform (e.g., both musl and gnu map to same)
+            if docker_platform in result:
+                continue
+            download_url = self.url_template.format(
+                repo=self.upstream_repo,
+                version=self.version,
+                name=self.name,
+                target=target,
+            )
+            result[docker_platform] = (download_url, target)
+        return result
 
 
 def load_config(path: Path) -> ToolConfig:
