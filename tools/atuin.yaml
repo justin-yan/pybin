@@ -1,7 +1,7 @@
 name: atuin
 upstream_repo: https://github.com/atuinsh/atuin
-version: "18.10.0"
-pypi_version: "18.10.0"
+version: "18.11.0"
+pypi_version: "18.11.0"
 license: MIT
 
 url_template: "{repo}/releases/download/v{version}/{name}-{target}.tar.gz"
