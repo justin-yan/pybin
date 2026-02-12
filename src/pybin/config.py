@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Literal
 
 import yaml
 
@@ -37,6 +38,7 @@ class ToolConfig:
     pypi_version: str
     license: str
     url_template: str
+    version_strategy: Literal["semver", "raw_tag"]
     targets: dict[str, str]  # target suffix -> symbolic platform name
 
     def get_resolved_targets(self) -> dict[str, str]:
@@ -76,6 +78,7 @@ def load_config(path: Path) -> ToolConfig:
         pypi_version=str(data["pypi_version"]),
         license=data["license"],
         url_template=data["url_template"],
+        version_strategy=data.get("version_strategy", "semver"),
         targets=data["targets"],
     )
 

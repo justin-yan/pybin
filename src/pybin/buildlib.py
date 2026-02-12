@@ -42,6 +42,61 @@ def identify_binary_file(file_name: str, name: str, download_url: str) -> bool:
     return file_name == name or file_name == download_url.split("/")[-1].split('.')[0]
 
 
+AR_MAGIC = b"!<arch>\n"
+AR_HEADER_SIZE = 60
+
+
+def extract_from_ar(archive: bytes, member_prefix: str) -> tuple[str, bytes]:
+    """Extract a member from an ar archive by name prefix.
+
+    The ar format is: 8-byte magic, then repeating 60-byte fixed headers
+    followed by file data (2-byte aligned).
+    """
+    if not archive.startswith(AR_MAGIC):
+        raise ValueError("Not a valid ar archive: bad magic")
+
+    offset = len(AR_MAGIC)
+    while offset < len(archive):
+        if offset + AR_HEADER_SIZE > len(archive):
+            break
+        header = archive[offset:offset + AR_HEADER_SIZE]
+        member_name = header[0:16].decode("ascii").strip().rstrip("/")
+        member_size = int(header[48:58].decode("ascii").strip())
+        data_offset = offset + AR_HEADER_SIZE
+        data = archive[data_offset:data_offset + member_size]
+
+        if member_name.startswith(member_prefix):
+            return member_name, data
+
+        # Entries are 2-byte aligned
+        offset = data_offset + member_size
+        if offset % 2 != 0:
+            offset += 1
+
+    raise ValueError(f"No member starting with {member_prefix!r} found in ar archive")
+
+
+def extract_binary_from_deb(archive: bytes, name: str, download_url: str) -> bytes:
+    """Extract a binary from a .deb package.
+
+    A .deb is an ar archive containing a data.tar.* with the filesystem tree.
+    """
+    member_name, data_tar_bytes = extract_from_ar(archive, "data.tar")
+    suffix = member_name.split(".")[-1]
+    mode = {"xz": "xz", "gz": "gz", "bz2": "bz2", "zst": "zst"}.get(suffix, "")
+
+    with tarfile.open(mode=f"r:{mode}", fileobj=io.BytesIO(data_tar_bytes)) as tar:
+        for entry in tar:
+            if entry.isreg():
+                if identify_binary_file(entry.name.split("/")[-1], name, download_url):
+                    source = tar.extractfile(entry).read()
+                    if len(source) < 1_000_000:
+                        continue
+                    return source
+
+    raise ValueError(f"Could not find binary {name!r} in .deb package")
+
+
 def convert_archive_to_wheel(
         name: str,
         pypi_version: str,
@@ -86,6 +141,10 @@ def convert_archive_to_wheel(
             tbin = z.read(binfilename)  # TODO: error handling if file doesn't exist
             zip_info.file_size = len(tbin)
             contents[zip_info] = tbin
+    elif compression_mode == 'deb':
+        source = extract_binary_from_deb(archive, name, download_url)
+        zip_info.file_size = len(source)
+        contents[zip_info] = source
     else:
         zip_info.file_size = len(archive)
         contents[zip_info] = archive

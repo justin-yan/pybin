@@ -1,0 +1,12 @@
+name: sl
+upstream_repo: https://github.com/facebook/sapling
+version: "0.2.20250521-115337+25ed6ac4"
+pypi_version: "0.2.20250521"
+license: GPL-2.0
+version_strategy: raw_tag
+
+url_template: "{repo}/releases/download/{version}/sapling_{version}{target}"
+
+targets:
+  .arm64_ventura.bottle.tar.gz: macos_arm
+  _amd64.Ubuntu22.04.deb: linux_gnu_x86

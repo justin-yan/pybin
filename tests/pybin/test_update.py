@@ -15,6 +15,10 @@ def test_extract_version_finds_embedded_semver():
     assert extract_version("fastfetch-2.55.1.tar.gz") == "2.55.1"
 
 
+def test_extract_version_from_sapling_tag():
+    assert extract_version("0.2.20250521-115337+25ed6ac4") == "0.2.20250521"
+
+
 def test_extract_version_raises_without_semver():
     with pytest.raises(ValueError):
         extract_version("no-version-present")
