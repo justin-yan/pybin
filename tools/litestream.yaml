@@ -1,7 +1,7 @@
 name: litestream
 upstream_repo: https://github.com/benbjohnson/litestream
-version: "0.5.7"
-pypi_version: "0.5.7"
+version: "0.5.8"
+pypi_version: "0.5.8"
 license: Apache-2.0
 
 url_template: "{repo}/releases/download/v{version}/{name}-{version}-{target}.tar.gz"
