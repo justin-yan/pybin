@@ -1,7 +1,7 @@
 name: traefik
 upstream_repo: https://github.com/traefik/traefik
-version: "3.6.10"
-pypi_version: "3.6.10"
+version: "3.6.11"
+pypi_version: "3.6.11"
 license: MIT
 
 url_template: "{repo}/releases/download/v{version}/{name}_v{version}_{target}.tar.gz"
