@@ -1,7 +1,7 @@
 name: fzf
 upstream_repo: https://github.com/junegunn/fzf
 version: "0.70.0"
-pypi_version: "0.70.0"
+pypi_version: "0.70.0a1"
 license: MIT License
 
 url_template: "{repo}/releases/download/v{version}/{name}-{version}-{target}.tar.gz"
