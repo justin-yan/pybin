@@ -1,7 +1,7 @@
 name: gh
 upstream_repo: https://github.com/cli/cli
-version: "2.87.3"
-pypi_version: "2.87.3"
+version: "2.88.1"
+pypi_version: "2.88.1"
 license: MIT
 
 url_template: "{repo}/releases/download/v{version}/{name}_{version}_{target}"
