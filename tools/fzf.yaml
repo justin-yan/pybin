@@ -1,0 +1,13 @@
+name: fzf
+upstream_repo: https://github.com/junegunn/fzf
+version: "0.70.0"
+pypi_version: "0.70.0"
+license: MIT License
+
+url_template: "{repo}/releases/download/v{version}/{name}-{version}-{target}.tar.gz"
+
+targets:
+  darwin_arm64: macos_arm
+  darwin_amd64: macos_x86
+  linux_arm64: linux_arm
+  linux_amd64: linux_x86
