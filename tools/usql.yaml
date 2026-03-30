@@ -1,7 +1,7 @@
 name: usql
 upstream_repo: https://github.com/xo/usql
-version: "0.21.1"
-pypi_version: "0.21.1"
+version: "0.21.4"
+pypi_version: "0.21.4"
 license: MIT
 
 url_template: "{repo}/releases/download/v{version}/{name}-{version}-{target}.tar.bz2"
