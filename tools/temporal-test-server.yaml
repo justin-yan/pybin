@@ -1,0 +1,13 @@
+name: temporal-test-server
+upstream_repo: https://github.com/temporalio/sdk-java
+version: "1.33.0"
+pypi_version: "1.33.0"
+license: Apache-2.0
+
+url_template: "{repo}/releases/download/v{version}/{name}_{version}_{target}.tar.gz"
+
+targets:
+  macOS_arm64: macos_arm
+  macOS_amd64: macos_x86
+  linux_arm64: linux_arm
+  linux_amd64: linux_x86

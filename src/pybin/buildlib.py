@@ -53,7 +53,7 @@ def convert_archive_to_wheel(
         compression_mode: Optional[str],
         download_url: str  # TODO: this is a horrible hack for codex that I want to refactor at some point
 ):
-    distribution_name = f'{name}_bin'  # If wheel names have a hyphen, the RECORD file is placed in the wrong .dist-info directory resulting in invalid wheels.
+    distribution_name = f'{name}_bin'.replace('-', '_')  # Wheel filenames require underscores in the distribution name (PEP 427); hyphens are field separators.
     pypi_distribution_name = f'{name}-bin'
     contents = {}
 
