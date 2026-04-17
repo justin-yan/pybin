@@ -13,6 +13,7 @@ from pybin.platform_tags import (
     MACOS_ARM,
     MACOS_UNIVERSAL,
     MACOS_X86,
+    WIN_X86,
 )
 
 # Map symbolic names in YAML to actual platform tags
@@ -26,6 +27,7 @@ PLATFORM_TAG_MAP = {
     "macos_arm": MACOS_ARM,
     "macos_x86": MACOS_X86,
     "macos_universal": MACOS_UNIVERSAL,
+    "win_x86": WIN_X86,
 }
 
 

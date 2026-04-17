@@ -24,3 +24,5 @@ LINUX_ARM = ".".join([LINUX_GNU_ARM, LINUX_MUSL_ARM])
 MACOS_X86 = "macosx_10_9_x86_64"
 MACOS_ARM = "macosx_11_0_arm64"  # Big Sur first version to support apple silicon
 MACOS_UNIVERSAL = "macosx_11_0_universal2"  # Big Sur first version to support apple silicon
+
+WIN_X86 = "win_amd64"
