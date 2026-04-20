@@ -1,7 +1,7 @@
 name: rclone
 upstream_repo: https://github.com/rclone/rclone
-version: "1.73.4"
-pypi_version: "1.73.4"
+version: "1.73.5"
+pypi_version: "1.73.5"
 license: MIT
 
 url_template: "{repo}/releases/download/v{version}/{name}-v{version}-{target}.zip"
