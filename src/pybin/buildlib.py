@@ -39,7 +39,8 @@ def identify_binary_file(file_name: str, name: str, download_url: str) -> bool:
     # TODO: This is a pretty janky way of doing this, where it likely would be better served by some per-project configuration
     #   to pick a binary naming scheme or something like that.  When this gets fixed, I can remove the download_url argument
     #   for convert_archive_to_wheel as well.
-    return file_name == name or file_name == download_url.split("/")[-1].split('.')[0]
+    base = file_name.removesuffix('.exe')
+    return base == name or base == download_url.split("/")[-1].split('.')[0]
 
 
 def convert_archive_to_wheel(
@@ -58,11 +59,16 @@ def convert_archive_to_wheel(
     contents = {}
 
     # Extract the command binary
+    is_windows = platform_tag.startswith('win')
+    script_name = f'{name}.exe' if is_windows else name
     datadir = f'{distribution_name}-{pypi_version}.data'
-    zip_info = ZipInfo(f'{datadir}/scripts/{name}', (2023,12,1,0,0,0))
-    zip_info.external_attr = 0o100777 << 16  # This is needed to force filetype and permissions
+    zip_info = ZipInfo(f'{datadir}/scripts/{script_name}', (2023,12,1,0,0,0))
     zip_info.compress_type = ZIP_DEFLATED
-    zip_info.create_system = 3
+    if is_windows:
+        zip_info.create_system = 0  # Windows
+    else:
+        zip_info.external_attr = 0o100777 << 16  # This is needed to force filetype and permissions
+        zip_info.create_system = 3
 
     if compression_mode in ['gz', 'bz2']:  # TODO: technically should check for .tar.gz, etc.
         with tarfile.open(mode=f"r:{compression_mode}", fileobj=io.BytesIO(archive)) as tar:

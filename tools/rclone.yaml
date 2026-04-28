@@ -11,3 +11,4 @@ targets:
   osx-amd64: macos_x86
   linux-arm: linux_arm
   linux-amd64: linux_x86
+  windows-amd64: win_x86
