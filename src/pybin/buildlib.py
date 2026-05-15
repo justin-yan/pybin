@@ -78,7 +78,7 @@ def convert_archive_to_wheel(
         "gz",
         "bz2",
     ]:  # TODO: technically should check for .tar.gz, etc.
-        with tarfile.open(
+        with tarfile.open(  # type: ignore[call-overload]
             mode=f"r:{compression_mode}", fileobj=io.BytesIO(archive)
         ) as tar:
             for entry in tar:
@@ -102,7 +102,7 @@ def convert_archive_to_wheel(
                 if identify_binary_file(file.split("/")[-1], name, download_url):
                     binfilename = file
                     break
-            tbin = z.read(binfilename)  # TODO: error handling if file doesn't exist
+            tbin = z.read(binfilename)  # type: ignore[arg-type]  # TODO: error handling if file doesn't exist
             zip_info.file_size = len(tbin)
             contents[zip_info] = tbin
     else:
@@ -134,7 +134,7 @@ We attempt to reflect the license of the upstream tool on the releases in PyPI, 
 This project was inspired by how [Maturin packages rust binaries](https://www.maturin.rs/bindings#bin).  The key observation is that in the wheel format, the [distribution-1.0.data/scripts/ directory is copied to bin](https://packaging.python.org/en/latest/specifications/binary-distribution-format/#installing-a-wheel-distribution-1-0-py32-none-any-whl), which means we can leverage this to seamlessly copy binaries onto a user's PATH.  Combined with Python's platform-specific wheels, this allows us to somehwat use pip as a "cross-platform package manager" for distributing single-binary CLI applications."""
 
     dist_info = f"{distribution_name}-{pypi_version}.dist-info"
-    contents[f"{dist_info}/METADATA"] = make_message(
+    contents[f"{dist_info}/METADATA"] = make_message(  # type: ignore[index]
         {
             "Metadata-Version": "2.1",
             "Name": pypi_distribution_name,
@@ -143,7 +143,7 @@ This project was inspired by how [Maturin packages rust binaries](https://www.ma
         },
         description,
     )
-    contents[f"{dist_info}/WHEEL"] = make_message(
+    contents[f"{dist_info}/WHEEL"] = make_message(  # type: ignore[index]
         {
             "Wheel-Version": "1.0",
             "Generator": f"{distribution_name} build.py",
