@@ -1,3 +1,7 @@
+PACKAGE_NAME := "pybin"
+SRC_FOLDER := "src"
+TEST_FOLDER := "tests"
+
 @default:
     just --list
 
@@ -36,7 +40,25 @@ sync FORCE="noforce":
     uv run --no-sync python scripts/update.py {{justfile_directory()}}/tools
 
 @test:
-    uv run pytest tests
+    uv run --no-sync pytest {{TEST_FOLDER}}
+
+@lint:
+    uv run --no-sync ruff check {{SRC_FOLDER}} {{TEST_FOLDER}}
+    uv run --no-sync ruff format --check {{SRC_FOLDER}} {{TEST_FOLDER}}
+
+@format:
+    uv run --no-sync ruff check --fix-only {{SRC_FOLDER}} {{TEST_FOLDER}}
+    uv run --no-sync ruff format {{SRC_FOLDER}} {{TEST_FOLDER}}
+
+@typecheck:
+    uv run --no-sync mypy --explicit-package-bases -p {{PACKAGE_NAME}}
+    uv run --no-sync mypy --allow-untyped-defs {{TEST_FOLDER}}
+
+@verify: lint typecheck test
+    echo "Done with Verification"
+
+@cicd-pr: init verify
+    echo "PR is successful!"
 
 @validate: init
     #!/usr/bin/env bash

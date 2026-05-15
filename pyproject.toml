@@ -13,8 +13,11 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "mypy",
     "twine>3",
     "pytest",
+    "ruff",
+    "types-PyYAML",
 ]
 
 [tool.setuptools]
@@ -22,3 +25,10 @@ zip-safe = false
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+pybin = ["py.typed"]
+
+[[tool.mypy.overrides]]
+module = "wheel.*"
+ignore_missing_imports = true
