@@ -6,7 +6,7 @@ from pathlib import Path
 
 def extract_version(tag: str) -> str:
     """Extract MAJOR.MINOR.PATCH from a tag string."""
-    match = re.search(r'\d+\.\d+\.\d+', tag)
+    match = re.search(r"\d+\.\d+\.\d+", tag)
     if match:
         return match.group(0)
     raise ValueError(f"Could not extract MAJOR.MINOR.PATCH from tag: {tag!r}")
@@ -26,13 +26,13 @@ def update_yaml_version(yaml_path: Path, old_version: str, new_version: str) -> 
     content = yaml_path.read_text()
     content = re.sub(
         rf'^(version:\s*["\']?){re.escape(old_version)}(["\']?)$',
-        rf'\g<1>{new_version}\g<2>',
+        rf"\g<1>{new_version}\g<2>",
         content,
         flags=re.MULTILINE,
     )
     content = re.sub(
         rf'^(pypi_version:\s*["\']?){re.escape(old_version)}(["\']?)$',
-        rf'\g<1>{new_version}\g<2>',
+        rf"\g<1>{new_version}\g<2>",
         content,
         flags=re.MULTILINE,
     )
