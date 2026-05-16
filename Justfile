@@ -6,11 +6,12 @@ TEST_FOLDER := "tests"
     just --list
 
 @init:
-    [ -f uv.lock ] && echo "Lockfile already exists" || just lock
+    uv lock --check-exists && echo "Lockfile already exists" || just lock
     just sync
 
 lock UPGRADE="noupgrade" PACKAGE="":
     #!/usr/bin/env bash
+    set -euo pipefail
     if [ "{{UPGRADE}}" = "--upgrade" ] && [ -n "{{PACKAGE}}" ]; then
         uv lock --upgrade-package "{{PACKAGE}}"
     elif [ "{{UPGRADE}}" = "--upgrade" ] || [ "{{UPGRADE}}" = "-U" ]; then
@@ -21,6 +22,7 @@ lock UPGRADE="noupgrade" PACKAGE="":
 
 sync FORCE="noforce":
     #!/usr/bin/env bash
+    set -euo pipefail
     if [ "{{FORCE}}" = "--force" ]  || [ "{{FORCE}}" = "-f" ]; then
         rm -rf {{justfile_directory()}}/.venv
     fi
@@ -39,8 +41,15 @@ sync FORCE="noforce":
 @update: init
     uv run --no-sync python scripts/update.py {{justfile_directory()}}/tools
 
-@test:
-    uv run --no-sync pytest {{TEST_FOLDER}}
+# Run tests. Optionally specify a specific test target e.g. `just test tests/path/to/test.py::test_name`
+@test TARGET=TEST_FOLDER:
+    uv run --no-sync pytest {{TARGET}}
+
+# Run tests with a specific mark e.g. `just testmark slow`
+testmark MARK="" TARGET=TEST_FOLDER:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    uv run --no-sync pytest -m '{{MARK}}' {{TARGET}}
 
 @lint:
     uv run --no-sync ruff check {{SRC_FOLDER}} {{TEST_FOLDER}}
@@ -53,6 +62,9 @@ sync FORCE="noforce":
 @typecheck:
     uv run --no-sync mypy --explicit-package-bases -p {{PACKAGE_NAME}}
     uv run --no-sync mypy --allow-untyped-defs {{TEST_FOLDER}}
+
+@run +COMMAND:
+    uv run --no-sync {{COMMAND}}
 
 @verify: lint typecheck test
     echo "Done with Verification"

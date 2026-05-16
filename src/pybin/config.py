@@ -47,9 +47,7 @@ class ToolConfig:
         for target, platform_name in self.targets.items():
             platform_tag = PLATFORM_TAG_MAP.get(platform_name)
             if platform_tag is None:
-                raise ValueError(
-                    f"Unknown platform tag '{platform_name}' for target '{target}'"
-                )
+                raise ValueError(f"Unknown platform tag '{platform_name}' for target '{target}'")
             resolved[target] = platform_tag
         return resolved
 

@@ -20,6 +20,9 @@ dev = [
     "types-PyYAML",
 ]
 
+[tool.uv]
+exclude-newer = "P14D"  # Exclude packages published in the past 14 days to avoid early updates
+
 [tool.setuptools]
 zip-safe = false
 
@@ -28,6 +31,29 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 pybin = ["py.typed"]
+
+[tool.ruff]
+line-length = 150
+target-version = "py310"
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP006", "NPY201", "T100", "DTZ"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pybin"]
+
+[tool.pytest.ini_options]
+addopts = "-ra -q --doctest-modules --durations=10 --setup-show --strict-markers -m 'not slow'"
+log_cli = true
+log_cli_level = "WARN"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+markers = [
+    "slow: Any test that executes too slowly for unit test loop",
+]
 
 [[tool.mypy.overrides]]
 module = "wheel.*"

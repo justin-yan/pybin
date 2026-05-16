@@ -30,24 +30,18 @@ FAKE_BINARY = b"\x00" * 2_000_000  # 2 MB, above the 1 MB heuristic threshold
 
 class TestIdentifyBinaryFile:
     def test_exact_name_match(self) -> None:
-        assert identify_binary_file(
-            "temporal", "temporal", "https://example.com/temporal_1.0.tar.gz"
-        )
+        assert identify_binary_file("temporal", "temporal", "https://example.com/temporal_1.0.tar.gz")
 
     def test_url_basename_match(self) -> None:
         url = "https://github.com/org/repo/releases/download/v1.0/codex-x86_64-unknown-linux-gnu.tar.gz"
         assert identify_binary_file("codex-x86_64-unknown-linux-gnu", "codex", url)
 
     def test_no_match(self) -> None:
-        assert not identify_binary_file(
-            "README.md", "temporal", "https://example.com/temporal_1.0.tar.gz"
-        )
+        assert not identify_binary_file("README.md", "temporal", "https://example.com/temporal_1.0.tar.gz")
 
 
 class TestConvertArchiveToWheel:
-    def test_hyphenated_name_produces_valid_wheel_filename(
-        self, tmp_path: Path
-    ) -> None:
+    def test_hyphenated_name_produces_valid_wheel_filename(self, tmp_path: Path) -> None:
         archive = _make_tar_gz("temporal-test-server", FAKE_BINARY)
         orig_cwd = os.getcwd()
         os.chdir(tmp_path)
@@ -65,9 +59,7 @@ class TestConvertArchiveToWheel:
             )
             filename = os.path.basename(result)
             # Wheel filenames must have exactly 5 dash-separated components: name-ver-py-abi-plat
-            assert filename.count("-") == 4, (
-                f"Wheel filename has wrong number of components: {filename}"
-            )
+            assert filename.count("-") == 4, f"Wheel filename has wrong number of components: {filename}"
             assert filename.startswith("temporal_test_server_bin-")
         finally:
             os.chdir(orig_cwd)
