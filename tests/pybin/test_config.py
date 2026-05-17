@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from pybin.config import load_config, PLATFORM_TAG_MAP
+from pybin.config import PLATFORM_TAG_MAP, load_config
 
 TOOLS_DIR = Path(__file__).parent.parent.parent / "tools"
 

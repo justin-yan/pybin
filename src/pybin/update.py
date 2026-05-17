@@ -14,9 +14,7 @@ def extract_version(tag: str) -> str:
 
 def get_latest_version(upstream_url: str) -> str:
     repo, name = upstream_url.split("/")[-2:]
-    with urllib.request.urlopen(
-        f"https://api.github.com/repos/{repo}/{name}/releases/latest"
-    ) as response:
+    with urllib.request.urlopen(f"https://api.github.com/repos/{repo}/{name}/releases/latest") as response:
         data = response.read().decode("utf-8")
         tag = json.loads(data)["tag_name"]
         return extract_version(tag)

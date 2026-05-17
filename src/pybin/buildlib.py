@@ -6,7 +6,7 @@ from email.message import EmailMessage
 from email.policy import EmailPolicy
 from pathlib import Path
 from typing import Optional
-from zipfile import ZipInfo, ZIP_DEFLATED, ZipFile
+from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 from wheel.wheelfile import WheelFile
 
@@ -69,9 +69,7 @@ def convert_archive_to_wheel(
     if is_windows:
         zip_info.create_system = 0  # Windows
     else:
-        zip_info.external_attr = (
-            0o100777 << 16
-        )  # This is needed to force filetype and permissions
+        zip_info.external_attr = 0o100777 << 16  # This is needed to force filetype and permissions
         zip_info.create_system = 3
 
     if compression_mode in [
@@ -83,13 +81,9 @@ def convert_archive_to_wheel(
         ) as tar:
             for entry in tar:
                 if entry.isreg():
-                    if identify_binary_file(
-                        entry.name.split("/")[-1], name, download_url
-                    ):
+                    if identify_binary_file(entry.name.split("/")[-1], name, download_url):
                         source = tar.extractfile(entry).read()
-                        if (
-                            len(source) < 1_000_000
-                        ):  # file is less than approximately 1MB, a heuristic for skipping incorrect matches.
+                        if len(source) < 1_000_000:  # file is less than approximately 1MB, a heuristic for skipping incorrect matches.
                             # TODO: this is useful for fastfetch.  When there is a "pathspec" for extracting the binary from an archive,
                             #   this filter should be removable.
                             continue
@@ -108,9 +102,7 @@ def convert_archive_to_wheel(
     else:
         zip_info.file_size = len(archive)
         contents[zip_info] = archive
-    assert zip_info in contents, (
-        "Failed to identify a binary to pack into the wheel payload"
-    )
+    assert zip_info in contents, "Failed to identify a binary to pack into the wheel payload"
 
     # Create distinfo
     tag = f"py3-none-{platform_tag}"
@@ -123,15 +115,24 @@ def convert_archive_to_wheel(
     }
     description = f"""# {name}-bin
 
-This project is part of the [pybin family of packages](https://github.com/justin-yan/pybin/tree/main/tools), which are generally permissively-licensed binary tools that have been re-packaged to be distributable via python's PyPI infrastructure using `pip install $TOOLNAME-bin`.
+This project is part of the [pybin family of packages](https://github.com/justin-yan/pybin/tree/main/tools), which are generally
+permissively-licensed binary tools that have been re-packaged to be distributable via python's PyPI infrastructure using
+`pip install $TOOLNAME-bin`.
 
-This is *not* affiliated with the upstream project found at {upstream_url}, and is merely a repackaging of their releases for installation through PyPI.  If the upstream project wants to officially release their tool on PyPI, please just reach out and we will happily transfer the project ownership over.
+This is *not* affiliated with the upstream project found at {upstream_url}, and is merely a repackaging of their releases for installation
+through PyPI. If the upstream project wants to officially release their tool on PyPI, please reach out and we will transfer the project
+ownership over.
 
 We attempt to reflect the license of the upstream tool on the releases in PyPI, but double-check at the upstream before use.
 
 ## Packaging Details
 
-This project was inspired by how [Maturin packages rust binaries](https://www.maturin.rs/bindings#bin).  The key observation is that in the wheel format, the [distribution-1.0.data/scripts/ directory is copied to bin](https://packaging.python.org/en/latest/specifications/binary-distribution-format/#installing-a-wheel-distribution-1-0-py32-none-any-whl), which means we can leverage this to seamlessly copy binaries onto a user's PATH.  Combined with Python's platform-specific wheels, this allows us to somehwat use pip as a "cross-platform package manager" for distributing single-binary CLI applications."""
+This project was inspired by how [Maturin packages rust binaries](https://www.maturin.rs/bindings#bin). The key observation is that in
+the wheel format, the [distribution-1.0.data/scripts/ directory is copied to bin][w], which means we can leverage this to seamlessly copy
+binaries onto a user's PATH. Combined with Python's platform-specific wheels, this allows us to somewhat use pip as a "cross-platform
+package manager" for distributing single-binary CLI applications.
+
+[w]: https://packaging.python.org/en/latest/specifications/binary-distribution-format/#installing-a-wheel-distribution-1-0-py32-none-any-whl"""
 
     dist_info = f"{distribution_name}-{pypi_version}.dist-info"
     contents[f"{dist_info}/METADATA"] = make_message(  # type: ignore[index]
@@ -169,9 +170,7 @@ def build_wheels(
         with urllib.request.urlopen(url) as response:
             archive = response.read()
         compression_mode = url.split(".")[-1]
-        compression_mode = (
-            compression_mode if compression_mode in ["gz", "bz2", "zip"] else None
-        )
+        compression_mode = compression_mode if compression_mode in ["gz", "bz2", "zip"] else None
         summary = f"A thin wrapper to distribute {upstream_repo_url} via pip."
         convert_archive_to_wheel(
             name,
