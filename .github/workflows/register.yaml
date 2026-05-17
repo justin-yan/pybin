@@ -6,6 +6,9 @@ on:
 jobs:
   register:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     container:
       image: ghcr.io/justin-yan/image/cicd-all:0.0.1
       volumes:
@@ -18,7 +21,4 @@ jobs:
 
       # Needed due to: https://github.com/actions/checkout/issues/766
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      - env:
-          PYPI_USERNAME: __token__
-          PYPI_PASSWORD: ${{ secrets.PYPI_REGISTRY_KEY }}
-        run: just register
+      - run: just register
