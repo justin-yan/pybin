@@ -1,7 +1,7 @@
 name: oxfmt
 upstream_repo: https://github.com/oxc-project/oxc
-version: "1.68.0"
-pypi_version: "1.68.0"
+version: "1.69.0"
+pypi_version: "1.69.0"
 license: MIT
 
 url_template: "{repo}/releases/download/apps_v{version}/{name}-{target}"
