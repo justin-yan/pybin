@@ -107,4 +107,4 @@ testmark MARK="" TARGET=TEST_FOLDER:
 #########
 
 @compat TOOL OUTPUT_DIRECTORY="":
-    PYBIN_COMPATIBILITY_OUTPUT_DIRECTORY="{{OUTPUT_DIRECTORY}}" uv run --no-sync pytest -m integration -s "tests/integration/test_pypi.py::test_distribution_matches_buildlib[{{TOOL}}]"
+    PYBIN_COMPATIBILITY_OUTPUT_DIRECTORY="{{OUTPUT_DIRECTORY}}" uv run --no-sync pytest -m integration -s "tests/integration/test_compatibility.py::test_distribution_matches_buildlib[{{TOOL}}]"
