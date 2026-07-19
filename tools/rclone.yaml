@@ -9,6 +9,6 @@ url_template: "{repo}/releases/download/v{version}/{name}-v{version}-{target}.zi
 targets:
   osx-arm64: macos_arm
   osx-amd64: macos_x86
-  linux-arm: linux_arm
+  linux-arm64: linux_arm
   linux-amd64: linux_x86
   windows-amd64: win_x86
