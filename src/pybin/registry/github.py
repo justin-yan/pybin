@@ -16,11 +16,7 @@ _CACHE_DIRECTORY = Path("/tmp/pybin")
 
 def _target_platform(target: str) -> Platform:
     normalized = target.lower()
-    if "linux" in normalized and "musl" in normalized:
-        return Platform.LINUX_MUSL
-    elif "linux" in normalized and "gnu" in normalized:
-        return Platform.LINUX_GNU
-    elif "linux" in normalized:
+    if "linux" in normalized:
         return Platform.LINUX
     elif "windows" in normalized:
         return Platform.WINDOWS
@@ -34,8 +30,6 @@ def _target_architecture(target: str) -> Architecture:
     normalized = target.lower()
     if "aarch64" in normalized or "arm64" in normalized:
         return Architecture.ARM64
-    elif "armv7" in normalized or normalized.endswith("-arm"):
-        return Architecture.ARMV7
     elif "x86_64" in normalized or "amd64" in normalized:
         return Architecture.X86_64
     else:

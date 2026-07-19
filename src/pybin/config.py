@@ -5,10 +5,6 @@ import yaml
 
 from pybin.platform_tags import (
     LINUX_ARM,
-    LINUX_GNU_ARM,
-    LINUX_GNU_X86,
-    LINUX_MUSL_ARM,
-    LINUX_MUSL_X86,
     LINUX_X86,
     MACOS_ARM,
     MACOS_UNIVERSAL,
@@ -20,10 +16,6 @@ from pybin.platform_tags import (
 PLATFORM_TAG_MAP = {
     "linux_arm": LINUX_ARM,
     "linux_x86": LINUX_X86,
-    "linux_gnu_arm": LINUX_GNU_ARM,
-    "linux_gnu_x86": LINUX_GNU_X86,
-    "linux_musl_arm": LINUX_MUSL_ARM,
-    "linux_musl_x86": LINUX_MUSL_X86,
     "macos_arm": MACOS_ARM,
     "macos_x86": MACOS_X86,
     "macos_universal": MACOS_UNIVERSAL,

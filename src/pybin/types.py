@@ -5,13 +5,10 @@ from enum import Enum
 class Architecture(str, Enum):
     X86_64 = "x86_64"
     ARM64 = "arm64"
-    ARMV7 = "armv7"
 
 
 class Platform(str, Enum):
     LINUX = "linux"
-    LINUX_GNU = "linux_gnu"
-    LINUX_MUSL = "linux_musl"
     MACOS = "macos"
     WINDOWS = "windows"
 

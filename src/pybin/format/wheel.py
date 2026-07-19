@@ -9,32 +9,12 @@ from wheel.wheelfile import WheelFile
 
 from pybin.platform_tags import (
     LINUX_ARM,
-    LINUX_GNU_ARM,
-    LINUX_GNU_X86,
-    LINUX_MUSL_ARM,
-    LINUX_MUSL_X86,
     LINUX_X86,
     MACOS_ARM,
     MACOS_X86,
     WIN_X86,
 )
 from pybin.types import Architecture, Binary, Platform
-
-BinaryTarget = tuple[Platform, Architecture]
-
-_BINARY_TARGET_TO_WHEEL_TAG: dict[BinaryTarget, str] = {
-    (Platform.LINUX, Architecture.X86_64): LINUX_X86,
-    (Platform.LINUX, Architecture.ARM64): LINUX_ARM,
-    (Platform.LINUX, Architecture.ARMV7): LINUX_ARM,
-    (Platform.LINUX_GNU, Architecture.X86_64): LINUX_GNU_X86,
-    (Platform.LINUX_GNU, Architecture.ARM64): LINUX_GNU_ARM,
-    (Platform.LINUX_GNU, Architecture.ARMV7): LINUX_GNU_ARM,
-    (Platform.LINUX_MUSL, Architecture.X86_64): LINUX_MUSL_X86,
-    (Platform.LINUX_MUSL, Architecture.ARM64): LINUX_MUSL_ARM,
-    (Platform.MACOS, Architecture.X86_64): MACOS_X86,
-    (Platform.MACOS, Architecture.ARM64): MACOS_ARM,
-    (Platform.WINDOWS, Architecture.X86_64): WIN_X86,
-}
 
 
 def _message(headers: dict[str, str], payload: str | None = None) -> bytes:
@@ -54,6 +34,14 @@ class WheelPacker:
     upstream_url: str
 
     def _platform_tag(self, binary: Binary) -> str:
+        _BINARY_TARGET_TO_WHEEL_TAG: dict[tuple[Platform, Architecture], str] = {
+            (Platform.LINUX, Architecture.X86_64): LINUX_X86,
+            (Platform.LINUX, Architecture.ARM64): LINUX_ARM,
+            (Platform.MACOS, Architecture.X86_64): MACOS_X86,
+            (Platform.MACOS, Architecture.ARM64): MACOS_ARM,
+            (Platform.WINDOWS, Architecture.X86_64): WIN_X86,
+        }
+
         try:
             return _BINARY_TARGET_TO_WHEEL_TAG[(binary.platform, binary.architecture)]
         except KeyError:

@@ -32,9 +32,9 @@ def test_just_homogeneous_case() -> None:
         Architecture.ARM64,
     ]
     assert [binary.platform for binary in release.binaries] == [
-        Platform.LINUX_MUSL,
+        Platform.LINUX,
         Platform.MACOS,
-        Platform.LINUX_MUSL,
+        Platform.LINUX,
     ]
     assert release.binaries[0].content.startswith(b"\x7fELF")
     assert release.binaries[2].content.startswith(b"\x7fELF")
@@ -240,8 +240,8 @@ def test_codex_case() -> None:
     assert [binary.platform for binary in release.binaries] == [
         Platform.MACOS,
         Platform.MACOS,
-        Platform.LINUX_MUSL,
-        Platform.LINUX_MUSL,
+        Platform.LINUX,
+        Platform.LINUX,
     ]
     assert release.binaries[2].content.startswith(b"\x7fELF")
     assert release.binaries[3].content.startswith(b"\x7fELF")
