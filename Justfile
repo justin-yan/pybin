@@ -101,3 +101,10 @@ testmark MARK="" TARGET=TEST_FOLDER:
         # Clean up dist folder
         rm -rf "$app_name-dist"
     done
+
+#########
+### Custom commands
+#########
+
+@compat TOOL OUTPUT_DIRECTORY="":
+    PYBIN_COMPATIBILITY_OUTPUT_DIRECTORY="{{OUTPUT_DIRECTORY}}" uv run --no-sync pytest -m integration -s "tests/integration/test_compatibility.py::test_distribution_matches_buildlib[{{TOOL}}]"

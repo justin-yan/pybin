@@ -9,6 +9,7 @@ requires-python = ">=3.10"
 dependencies = [
   "wheel",
   "pyyaml",
+  "zstandard",
 ]
 
 [dependency-groups]
@@ -45,12 +46,13 @@ select = ["E", "F", "W", "I", "UP006", "NPY201", "T100", "DTZ"]
 known-first-party = ["pybin"]
 
 [tool.pytest.ini_options]
-addopts = "-ra -q --doctest-modules --durations=10 --setup-show --strict-markers -m 'not slow'"
+addopts = "-ra -q --doctest-modules --durations=10 --setup-show --strict-markers -m 'not slow and not integration'"
 log_cli = true
 log_cli_level = "WARN"
 log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
 log_cli_date_format = "%Y-%m-%d %H:%M:%S"
 markers = [
+    "integration: Tests that interact with external services",
     "slow: Any test that executes too slowly for unit test loop",
 ]
 
