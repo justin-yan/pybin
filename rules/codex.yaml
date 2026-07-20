@@ -1,7 +1,7 @@
 source:
   github:
     repository: openai/codex
-    version: "0.144.4"
+    version: "0.144.6"
     release_slug: "rust-v{version}/{name}-{target}.zst"
     targets:
       - aarch64-apple-darwin
