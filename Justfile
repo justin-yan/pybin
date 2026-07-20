@@ -39,7 +39,7 @@ sync FORCE="noforce":
     uv publish --trusted-publishing always {{APP_NAME}}-dist/*
 
 @update: init
-    uv run --no-sync python scripts/update.py {{justfile_directory()}}/tools
+    uv run --no-sync python scripts/update.py {{justfile_directory()}}/rules
 
 # Run tests. Optionally specify a specific test target e.g. `just test tests/path/to/test.py::test_name`
 @test TARGET=TEST_FOLDER:
