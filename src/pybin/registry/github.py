@@ -3,6 +3,7 @@ import urllib.request
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path, PurePosixPath
+from typing import cast
 from urllib.parse import urlparse
 
 import zstandard
@@ -43,6 +44,17 @@ class GithubReleasePuller:
     release_slug: str
     targets: list[str]
     bin_name: str | None = None  # Needed when desired CLI name does not match repository name, e.g. cli/cli vs. gh
+
+    @classmethod
+    def from_config(cls, config: dict[str, object]) -> "GithubReleasePuller":
+        bin_name = config.get("bin_name")
+        return cls(
+            repository=str(config["repository"]),
+            version=str(config["version"]),
+            release_slug=str(config["release_slug"]),
+            targets=[str(target) for target in cast(list[object], config["targets"])],
+            bin_name=str(bin_name) if bin_name is not None else None,
+        )
 
     @property
     def _bin_name(self) -> str:

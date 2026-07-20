@@ -10,6 +10,14 @@ class PyPIReleasePusher:
     upstream_url: str
     output_directory: Path | None = None
 
+    @classmethod
+    def from_config(cls, config: dict[str, object]) -> "PyPIReleasePusher":
+        output_directory = config.get("output_directory")
+        return cls(
+            upstream_url=str(config["upstream_url"]),
+            output_directory=Path(str(output_directory)) if output_directory is not None else None,
+        )
+
     def __call__(self, release: Release) -> None:
         output_directory = self.output_directory or Path(f"{release.name}-dist")
         output_directory.mkdir(exist_ok=True)

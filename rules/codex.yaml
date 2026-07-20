@@ -1,0 +1,14 @@
+source:
+  github:
+    repository: openai/codex
+    version: "0.144.1"
+    release_slug: "rust-v{version}/{name}-{target}.zst"
+    targets:
+      - aarch64-apple-darwin
+      - x86_64-apple-darwin
+      - aarch64-unknown-linux-musl
+      - x86_64-unknown-linux-musl
+
+targets:
+  - pypi:
+      upstream_url: https://github.com/openai/codex
