@@ -126,5 +126,6 @@ class GithubReleasePuller:
             name=self._bin_name,
             version=self.version,
             license=self._license_name(),
+            upstream_url=f"https://github.com/{self.repository}",
             binaries=[self._pull_binary(target) for target in self.targets],
         )

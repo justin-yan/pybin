@@ -43,7 +43,7 @@ def test_distribution_matches_buildlib(config_path: Path, tmp_path: Path, monkey
         targets=list(config.targets),
         bin_name=config.name,
     )()
-    PyPIReleasePusher(upstream_url=config.upstream_repo, output_directory=new_distribution)(release)
+    PyPIReleasePusher(output_directory=new_distribution)(release)
     new_elapsed = perf_counter() - new_start
     print(f"\n{config.name}: buildlib={legacy_elapsed:.3f}s github+pypi={new_elapsed:.3f}s")
     if output_directory:

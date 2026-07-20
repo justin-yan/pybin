@@ -26,6 +26,7 @@ class Release:
     name: str
     version: str
     license: str
+    upstream_url: str
     binaries: list[Binary]
 
 

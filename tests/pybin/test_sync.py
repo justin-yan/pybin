@@ -27,7 +27,7 @@ def test_parse_sync_rule() -> None:
                 "x86_64-unknown-linux-musl",
             ],
         ),
-        targets=[PyPIReleasePusher(upstream_url="https://github.com/openai/codex")],
+        targets=[PyPIReleasePusher()],
     )
 
 

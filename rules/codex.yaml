@@ -10,5 +10,4 @@ source:
       - x86_64-unknown-linux-musl
 
 targets:
-  - pypi:
-      upstream_url: https://github.com/openai/codex
+  - pypi: {}
