@@ -72,39 +72,10 @@ testmark MARK="" TARGET=TEST_FOLDER:
 @cicd-pr: init verify
     echo "PR is successful!"
 
-@validate: init
-    #!/usr/bin/env bash
-    set -ex
-    for yaml_file in {{justfile_directory()}}/rules/*.yaml; do
-        app_name=$(basename "$yaml_file" .yaml)
-        echo "Validating $app_name..."
-        just build "$app_name"
+########
+### Custom Commands
+########
 
-        for wheel in "$app_name-dist/"*.whl; do
-            if [ -f "$wheel" ]; then
-                size=$(stat -c%s "$wheel" 2>/dev/null || stat -f%z "$wheel" 2>/dev/null)
-                if [ "$size" -lt 500000 ]; then
-                    echo "ERROR: $wheel is only $size bytes, suggesting no binary was properly downloaded"
-                    exit 1
-                fi
-                echo "✓ $wheel is $(($size / 1048576))MB"
-            fi
-        done
-        # Install the Linux x86 wheel
-        wheel_file=$(ls "$app_name-dist/"*manylinux2014_x86_64*.whl 2>/dev/null | head -n1)
-        if [ -n "$wheel_file" ]; then
-            echo "Installing $wheel_file..."
-            uv pip install --force-reinstall "$wheel_file"
-        else
-            echo "Warning: No Linux x86 wheel found for $app_name"
-        fi
-        # Clean up dist folder
-        rm -rf "$app_name-dist"
-    done
-
-#########
-### Custom commands
-#########
-
-@compat TOOL OUTPUT_DIRECTORY="":
-    PYBIN_COMPATIBILITY_OUTPUT_DIRECTORY="{{OUTPUT_DIRECTORY}}" uv run --no-sync pytest -m integration -s "tests/integration/test_compatibility.py::test_distribution_matches_buildlib[{{TOOL}}]"
+# Validate a single sync rule, e.g. `just validate codex`
+@validate RULE: init
+    just testmark integration "tests/integration/test_validation.py::test_rule_builds_installable_wheels[{{RULE}}]"

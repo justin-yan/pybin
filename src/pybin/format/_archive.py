@@ -22,6 +22,9 @@ def select_archive_member(members: list[PurePosixPath], extract_spec: str) -> Pu
     if not matches and len(members) == 1:
         matches = members
 
+    if not matches:
+        raise ValueError(f"No archive member matches {extract_spec!r}")
+
     # In cases where there is more than one match, we take the first match that sits in a `bin` directory, otherwise
     #   we take the head of the list (which would generally be the only match)
     return next((member for member in matches if member.parent.name == "bin"), matches[0])
