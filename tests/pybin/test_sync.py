@@ -19,7 +19,7 @@ def test_parse_sync_rule() -> None:
     assert parse_sync_rule(config) == SyncRule(
         source=GithubReleasePuller(
             repository="openai/codex",
-            version=config['source']['github']['version'],
+            version=config["source"]["github"]["version"],
             release_slug="rust-v{version}/{name}-{target}.zst",
             targets=[
                 "aarch64-apple-darwin",
