@@ -26,6 +26,7 @@ def test_just_homogeneous_case() -> None:
     assert release.name == "just"
     assert release.version == "1.56.0"
     assert release.license == "CC0-1.0"
+    assert release.upstream_url == "https://github.com/casey/just"
     assert [binary.architecture for binary in release.binaries] == [
         Architecture.X86_64,
         Architecture.ARM64,

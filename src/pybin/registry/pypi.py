@@ -7,13 +7,22 @@ from pybin.types import Release
 
 @dataclass(frozen=True)
 class PyPIReleasePusher:
-    upstream_url: str
     output_directory: Path | None = None
+
+    @classmethod
+    def from_config(cls, config: dict[str, object]) -> "PyPIReleasePusher":
+        output_directory = config.get("output_directory")
+        return cls(output_directory=Path(str(output_directory)) if output_directory is not None else None)
 
     def __call__(self, release: Release) -> None:
         output_directory = self.output_directory or Path(f"{release.name}-dist")
         output_directory.mkdir(exist_ok=True)
-        packer = WheelPacker(name=release.name, version=release.version, license=release.license, upstream_url=self.upstream_url)
+        packer = WheelPacker(
+            name=release.name,
+            version=release.version,
+            license=release.license,
+            upstream_url=release.upstream_url,
+        )
 
         for binary in release.binaries:
             (output_directory / packer.filename(binary)).write_bytes(packer(binary))

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import Protocol
 
 
 class Architecture(str, Enum):
@@ -25,4 +26,19 @@ class Release:
     name: str
     version: str
     license: str
+    upstream_url: str
     binaries: list[Binary]
+
+
+class ReleaseSource(Protocol):
+    def __call__(self) -> Release: ...
+
+
+class ReleaseTarget(Protocol):
+    def __call__(self, release: Release) -> None: ...
+
+
+@dataclass(frozen=True)
+class SyncRule:
+    source: ReleaseSource
+    targets: list[ReleaseTarget]
