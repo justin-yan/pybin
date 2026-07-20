@@ -1,0 +1,14 @@
+source:
+  github:
+    repository: cli/cli
+    version: "2.96.0"
+    release_slug: "v{version}/{name}_{version}_{target}"
+    targets:
+      - macOS_arm64.zip
+      - macOS_amd64.zip
+      - linux_arm64.tar.gz
+      - linux_amd64.tar.gz
+    bin_name: gh
+
+targets:
+  - pypi: {}

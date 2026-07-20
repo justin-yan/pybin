@@ -1,0 +1,13 @@
+source:
+  github:
+    repository: fastfetch-cli/fastfetch
+    version: "2.66.0"
+    release_slug: "{version}/{name}-{target}.tar.gz"
+    targets:
+      - macos-aarch64
+      - macos-amd64
+      - linux-aarch64
+      - linux-amd64
+
+targets:
+  - pypi: {}

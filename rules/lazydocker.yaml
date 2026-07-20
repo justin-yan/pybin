@@ -1,0 +1,13 @@
+source:
+  github:
+    repository: jesseduffield/lazydocker
+    version: "0.25.2"
+    release_slug: "v{version}/{name}_{version}_{target}.tar.gz"
+    targets:
+      - Darwin_arm64
+      - Darwin_x86_64
+      - Linux_arm64
+      - Linux_x86_64
+
+targets:
+  - pypi: {}

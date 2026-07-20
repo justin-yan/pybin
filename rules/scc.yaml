@@ -1,0 +1,13 @@
+source:
+  github:
+    repository: boyter/scc
+    version: "3.7.0"
+    release_slug: "v{version}/{name}_{target}.tar.gz"
+    targets:
+      - Darwin_arm64
+      - Darwin_x86_64
+      - Linux_arm64
+      - Linux_x86_64
+
+targets:
+  - pypi: {}

@@ -1,0 +1,14 @@
+source:
+  github:
+    repository: aws/copilot-cli
+    version: "1.34.1"
+    release_slug: "v{version}/{name}_{version}_{target}.tar.gz"
+    targets:
+      - macOS_arm64
+      - macOS_amd64
+      - linux_arm64
+      - linux_amd64
+    bin_name: copilot
+
+targets:
+  - pypi: {}

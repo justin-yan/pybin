@@ -9,16 +9,17 @@ from pybin.sync import parse_sync_rule
 from pybin.types import SyncRule
 
 PROJECT_DIRECTORY = Path(__file__).parents[2]
+RULES_DIRECTORY = PROJECT_DIRECTORY / "rules"
 INVALID_RULES_DIRECTORY = PROJECT_DIRECTORY / "tests" / "fixtures" / "sync"
 
 
 def test_parse_sync_rule() -> None:
-    config = yaml.safe_load((PROJECT_DIRECTORY / "rules" / "codex.yaml").read_text())
+    config = yaml.safe_load((RULES_DIRECTORY / "codex.yaml").read_text())
 
     assert parse_sync_rule(config) == SyncRule(
         source=GithubReleasePuller(
             repository="openai/codex",
-            version="0.144.1",
+            version="0.144.6",
             release_slug="rust-v{version}/{name}-{target}.zst",
             targets=[
                 "aarch64-apple-darwin",

@@ -1,0 +1,13 @@
+source:
+  github:
+    repository: amacneil/dbmate
+    version: "2.34.1"
+    release_slug: "v{version}/{name}-{target}"
+    targets:
+      - macos-arm64
+      - macos-amd64
+      - linux-arm64
+      - linux-amd64
+
+targets:
+  - pypi: {}

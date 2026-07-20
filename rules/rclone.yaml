@@ -1,0 +1,14 @@
+source:
+  github:
+    repository: rclone/rclone
+    version: "1.74.4"
+    release_slug: "v{version}/{name}-v{version}-{target}.zip"
+    targets:
+      - osx-arm64
+      - osx-amd64
+      - linux-arm64
+      - linux-amd64
+      - windows-amd64
+
+targets:
+  - pypi: {}

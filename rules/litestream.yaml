@@ -1,0 +1,13 @@
+source:
+  github:
+    repository: benbjohnson/litestream
+    version: "0.5.14"
+    release_slug: "v{version}/{name}-{version}-{target}.tar.gz"
+    targets:
+      - darwin-arm64
+      - darwin-x86_64
+      - linux-arm64
+      - linux-x86_64
+
+targets:
+  - pypi: {}

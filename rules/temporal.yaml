@@ -1,0 +1,14 @@
+source:
+  github:
+    repository: temporalio/cli
+    version: "1.8.0"
+    release_slug: "v{version}/{name}_cli_{version}_{target}.tar.gz"
+    targets:
+      - darwin_arm64
+      - darwin_amd64
+      - linux_arm64
+      - linux_amd64
+    bin_name: temporal
+
+targets:
+  - pypi: {}
