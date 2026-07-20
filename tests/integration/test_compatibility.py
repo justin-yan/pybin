@@ -6,11 +6,12 @@ import pytest
 
 from pybin.buildlib import build_wheels_from_config
 from pybin.config import load_config
-from pybin.registry.github import GithubReleasePuller
-from pybin.registry.pypi import PyPIReleasePusher
+from pybin.sync import sync
 
 pytestmark = pytest.mark.integration
-TOOLS_DIRECTORY = Path(__file__).parents[2] / "tools"
+PROJECT_DIRECTORY = Path(__file__).parents[2]
+TOOLS_DIRECTORY = PROJECT_DIRECTORY / "tools"
+RULES_DIRECTORY = PROJECT_DIRECTORY / "rules"
 
 
 @pytest.mark.parametrize("config_path", sorted(TOOLS_DIRECTORY.glob("*.yaml")), ids=lambda path: path.stem)
@@ -31,21 +32,11 @@ def test_distribution_matches_buildlib(config_path: Path, tmp_path: Path, monkey
     new_root = compatibility_root / "after"
     new_root.mkdir(parents=True, exist_ok=True)
     new_distribution = new_root / f"{config.name}-dist"
-    repository = config.upstream_repo.removeprefix("https://github.com/")
-    release_slug = config.url_template.removeprefix("{repo}/releases/download/")
-    if config.name == "codex":
-        release_slug = release_slug.removesuffix(".tar.gz") + ".zst"
+    monkeypatch.chdir(new_root)
     new_start = perf_counter()
-    release = GithubReleasePuller(
-        repository=repository,
-        version=config.version,
-        release_slug=release_slug,
-        targets=list(config.targets),
-        bin_name=config.name,
-    )()
-    PyPIReleasePusher(output_directory=new_distribution)(release)
+    sync(RULES_DIRECTORY / config_path.name)
     new_elapsed = perf_counter() - new_start
-    print(f"\n{config.name}: buildlib={legacy_elapsed:.3f}s github+pypi={new_elapsed:.3f}s")
+    print(f"\n{config.name}: buildlib={legacy_elapsed:.3f}s sync={new_elapsed:.3f}s")
     if output_directory:
         print(f"output: {compatibility_root}")
 

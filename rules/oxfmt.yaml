@@ -1,0 +1,15 @@
+source:
+  github:
+    repository: oxc-project/oxc
+    version: "1.74.0"
+    release_slug: "apps_v{version}/{name}-{target}"
+    targets:
+      - aarch64-apple-darwin.tar.gz
+      - x86_64-apple-darwin.tar.gz
+      - aarch64-unknown-linux-musl.tar.gz
+      - x86_64-unknown-linux-musl.tar.gz
+      - x86_64-pc-windows-msvc.zip
+    bin_name: oxfmt
+
+targets:
+  - pypi: {}

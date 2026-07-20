@@ -1,0 +1,14 @@
+source:
+  github:
+    repository: temporalio/sdk-java
+    version: "1.37.0"
+    release_slug: "v{version}/{name}_{version}_{target}.tar.gz"
+    targets:
+      - macOS_arm64
+      - macOS_amd64
+      - linux_arm64
+      - linux_amd64
+    bin_name: temporal-test-server
+
+targets:
+  - pypi: {}

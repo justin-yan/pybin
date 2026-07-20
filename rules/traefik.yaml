@@ -1,0 +1,13 @@
+source:
+  github:
+    repository: traefik/traefik
+    version: "3.7.8"
+    release_slug: "v{version}/{name}_v{version}_{target}.tar.gz"
+    targets:
+      - darwin_arm64
+      - darwin_amd64
+      - linux_arm64
+      - linux_amd64
+
+targets:
+  - pypi: {}
