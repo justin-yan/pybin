@@ -4,22 +4,12 @@ This project was inspired by how [Maturin packages rust binaries](https://www.ma
 
 Combined with Python's platform-specific wheels, this allows us to use pip as a "cross-platform package manager" for distributing single-binary CLI applications.
 
-This is the [list of tools bundled this way](https://github.com/justin-yan/pybin/tree/main/src/pybin), which can be installed with `pip install $TOOLNAME-bin`. 
+This is the [list of tools bundled this way](https://github.com/justin-yan/pybin/tree/main/rules), which can be installed with `pip install $TOOLNAME-bin`. 
 
-## Wheel Building Process
+## New Tool Onboarding
 
-The core of the logic lies in the `buildlib.py` module.
-
-- A mapping from download URL (often github releases) to pypi platform tag is required.
-- For each platform:
-    - Download the release & extract the binary.
-    - Set file permissions and place into scripts directory within wheel archive.
-    - Create the METADATA and WHEEL files within wheel archive.
-    - Place wheel into `dist/` folder.
-- Once all wheels are constructed, the distribution is uploaded to PyPI.
-
-CICD is configured to automatically recognize new *PyPI* releases by looking for a diff on the PYPI_VERSION.  When this happens, a build-and-release cycle is performed for that release version.
-
-## Publishing
-
-When a new tool is added, a pending publisher needs to be registered in PyPI for the proposed package name, targeting the `register.yaml` workflow.
+- Create a <tool>.yaml file.
+- Fill out the github source and pypi target.
+  - Stick to aarch and x86 for the architecture.
+  - Prefer linux-musl if available for fully statically linked all-linux binaries.
+- Create a pending publisher in PyPI for the proposed package name, targeting the `register.yaml` workflow.
