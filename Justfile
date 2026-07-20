@@ -30,10 +30,10 @@ sync FORCE="noforce":
 
 @build APP_NAME: init
     echo "Building {{APP_NAME}}"
-    uv run --no-sync python scripts/build_from_yaml.py tools/{{APP_NAME}}.yaml
+    uv run --no-sync python scripts/build_from_yaml.py rules/{{APP_NAME}}.yaml
 
 @register:
-    git diff --name-only HEAD^1 HEAD -G"^pypi_version:" "tools/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just _register {}'
+    git diff --name-only HEAD^1 HEAD -G"^    version:" "rules/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just _register {}'
 
 @_register APP_NAME: init (build APP_NAME)
     uv publish --trusted-publishing always {{APP_NAME}}-dist/*
@@ -75,7 +75,7 @@ testmark MARK="" TARGET=TEST_FOLDER:
 @validate: init
     #!/usr/bin/env bash
     set -ex
-    for yaml_file in {{justfile_directory()}}/tools/*.yaml; do
+    for yaml_file in {{justfile_directory()}}/rules/*.yaml; do
         app_name=$(basename "$yaml_file" .yaml)
         echo "Validating $app_name..."
         just build "$app_name"
