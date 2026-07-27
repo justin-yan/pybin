@@ -1,7 +1,7 @@
 source:
   github:
     repository: oxc-project/oxc
-    version: "1.74.0"
+    version: "1.75.0"
     release_slug: "apps_v{version}/{name}-{target}"
     targets:
       - aarch64-apple-darwin.tar.gz

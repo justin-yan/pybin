@@ -1,7 +1,7 @@
 source:
   github:
     repository: benbjohnson/litestream
-    version: "0.5.14"
+    version: "0.5.15"
     release_slug: "v{version}/{name}-{version}-{target}.tar.gz"
     targets:
       - darwin-arm64
