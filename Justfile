@@ -1,13 +1,32 @@
-PACKAGE_NAME := "pybin"
-SRC_FOLDER := "src"
-TEST_FOLDER := "tests"
+######
+### Project Variables
+######
+NAME := "pybin"
+DEV_IMAGE:='ghcr.io/justin-yan/image/dev-all:latest'
+
+######
+### Python Variables
+######
+SRC_FOLDER:='src'
+TEST_FOLDER:='tests'
+
 
 @default:
     just --list
 
+######
+### Environment
+######
 @init:
     uv lock --check-exists && echo "Lockfile already exists" || just lock
     just sync
+
+@run +COMMAND:
+    uv run --no-sync {{COMMAND}}
+
+@shell:
+    #!/usr/bin/env bash
+    pipenv shell
 
 lock UPGRADE="noupgrade" PACKAGE="":
     #!/usr/bin/env bash
@@ -28,22 +47,35 @@ sync FORCE="noforce":
     fi
     uv sync --frozen
 
-@build APP_NAME: init
-    echo "Building {{APP_NAME}}"
-    uv run --no-sync python scripts/build_from_yaml.py rules/{{APP_NAME}}.yaml
+@repl:
+    uv run --no-sync python
 
-@register:
-    git diff --name-only HEAD^1 HEAD -G"^    version:" "rules/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just _register {}'
+######
+### LintCycle
+######
+@lint:
+    uv run --no-sync ruff check {{SRC_FOLDER}} {{TEST_FOLDER}}
+    uv run --no-sync ruff format --check {{SRC_FOLDER}} {{TEST_FOLDER}}
 
-@_register APP_NAME: init (build APP_NAME)
-    uv publish --trusted-publishing always {{APP_NAME}}-dist/*
-
-@update: init
-    uv run --no-sync python scripts/update.py {{justfile_directory()}}/rules
+@typecheck:
+    uv run --no-sync mypy --explicit-package-bases -p {{NAME}}
+    uv run --no-sync mypy --allow-untyped-defs tests
 
 # Run tests. Optionally specify a specific test target e.g. `just test tests/path/to/test.py::test_name`
 @test TARGET=TEST_FOLDER:
     uv run --no-sync pytest {{TARGET}}
+
+@format:
+    uv run --no-sync ruff check --fix-only {{SRC_FOLDER}} {{TEST_FOLDER}}
+    uv run --no-sync ruff format {{SRC_FOLDER}} {{TEST_FOLDER}}
+
+@stats:
+    uv run --no-sync coverage run -m pytest {{TEST_FOLDER}}
+    uv run --no-sync coverage report -m
+    scc --by-file --include-ext py
+
+@verify: lint typecheck test
+    echo "Done with Verification"
 
 # Run tests with a specific mark e.g. `just testmark slow`
 testmark MARK="" TARGET=TEST_FOLDER:
@@ -51,31 +83,51 @@ testmark MARK="" TARGET=TEST_FOLDER:
     set -euo pipefail
     uv run --no-sync pytest -m '{{MARK}}' {{TARGET}}
 
-@lint:
-    uv run --no-sync ruff check {{SRC_FOLDER}} {{TEST_FOLDER}}
-    uv run --no-sync ruff format --check {{SRC_FOLDER}} {{TEST_FOLDER}}
+######
+### Virt
+######
+@virt +COMMAND:
+    #!/usr/bin/env bash
+    set -euo pipefail
 
-@format:
-    uv run --no-sync ruff check --fix-only {{SRC_FOLDER}} {{TEST_FOLDER}}
-    uv run --no-sync ruff format {{SRC_FOLDER}} {{TEST_FOLDER}}
+    project_dir={{quote(justfile_directory())}}
+    python="$("$project_dir/.venv/bin/python" -c 'import os, sys; print(os.path.realpath(sys.executable))')"
+    python_root="$(dirname "$(dirname "$python")")"
 
-@typecheck:
-    uv run --no-sync mypy --explicit-package-bases -p {{PACKAGE_NAME}}
-    uv run --no-sync mypy --allow-untyped-defs {{TEST_FOLDER}}
+    docker run -it --rm \
+        --name "{{NAME}}-virt" \
+        -v "$project_dir:$project_dir" \
+        -v "$python_root:$python_root:ro" \
+        -w "$project_dir" \
+        {{DEV_IMAGE}} just {{COMMAND}}
 
-@run +COMMAND:
-    uv run --no-sync {{COMMAND}}
-
-@verify: lint typecheck test
-    echo "Done with Verification"
+######
+### Development Cycle
+######
+@build APP_NAME: init
+    echo "Building {{APP_NAME}}"
+    uv run --no-sync python scripts/build_from_yaml.py rules/{{APP_NAME}}.yaml
 
 @cicd-pr: init verify
     echo "PR is successful!"
 
-########
-### Custom Commands
-########
+@cicd-register:
+    git diff --name-only HEAD^1 HEAD -G"^    version:" "rules/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just _register {}'
+
+@_register APP_NAME: init (build APP_NAME)
+    uv publish --trusted-publishing always {{APP_NAME}}-dist/*
+
+######
+### Custom Commands Section Begin
+######
 
 # Validate a single sync rule, e.g. `just validate codex`
 @validate RULE: init
     just testmark integration "tests/integration/test_validation.py::test_rule_builds_installable_wheels[{{RULE}}]"
+
+@update: init
+    uv run --no-sync python scripts/update.py {{justfile_directory()}}/rules
+
+######
+### Custom Commands Section End
+######
