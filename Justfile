@@ -1,7 +1,7 @@
 ######
 ### Project Variables
 ######
-PACKAGE_NAME := "pybin"
+NAME := "pybin"
 DEV_IMAGE:='ghcr.io/justin-yan/image/dev-all:latest'
 
 ######
