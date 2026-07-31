@@ -3,6 +3,7 @@ from typing import cast
 
 import yaml
 
+from pybin.registry.docker import DockerReleaseBuilder
 from pybin.registry.github import GithubReleasePuller
 from pybin.registry.pypi import PyPIReleasePusher
 from pybin.types import ReleaseTarget, SyncRule
@@ -21,6 +22,8 @@ def parse_sync_rule(config: dict[str, object]) -> SyncRule:
         match target_config:
             case {"pypi": target_options}:
                 targets.append(PyPIReleasePusher.from_config(cast(dict[str, object], target_options)))
+            case {"docker": target_options}:
+                targets.append(DockerReleaseBuilder.from_config(cast(dict[str, object], target_options)))
             case _:
                 raise ValueError(f"Unknown target: {target_config}")
 

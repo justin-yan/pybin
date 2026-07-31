@@ -6,6 +6,23 @@ Combined with Python's platform-specific wheels, this allows us to use pip as a 
 
 This is the [list of tools bundled this way](https://github.com/justin-yan/pybin/tree/main/rules), which can be installed with `pip install $TOOLNAME-bin`. 
 
+The same release can also be packaged as a multi-platform Docker image containing only the Linux binary. Add a Docker target to a rule:
+
+```yaml
+targets:
+  - docker:
+      repository: ghcr.io/example/{name}
+      push: true
+```
+
+This publishes `ghcr.io/example/$TOOLNAME:$VERSION`, with the executable at `/$TOOLNAME`, for use as a build source:
+
+```dockerfile
+COPY --from=ghcr.io/example/example-tool:1.2.3 /example-tool /bin/
+```
+
+Omit `push` to load an image for the host architecture into the local Docker image store instead. The default local repository is `tool-{name}`.
+
 ## New Tool Onboarding
 
 - Create a <tool>.yaml file.

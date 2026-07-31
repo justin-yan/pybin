@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from pybin.registry.docker import DockerReleaseBuilder
 from pybin.registry.github import GithubReleasePuller
 from pybin.registry.pypi import PyPIReleasePusher
 from pybin.sync import parse_sync_rule
@@ -44,3 +45,22 @@ def test_parse_sync_rule_rejects_invalid_rule(filename: str, error: str) -> None
 
     with pytest.raises(ValueError, match=error):
         parse_sync_rule(config)
+
+
+def test_parse_sync_rule_with_docker_target() -> None:
+    config = yaml.safe_load((RULES_DIRECTORY / "codex.yaml").read_text())
+    config["targets"].append(
+        {
+            "docker": {
+                "repository": "ghcr.io/example/{name}",
+                "push": True,
+            }
+        }
+    )
+
+    rule = parse_sync_rule(config)
+
+    assert rule.targets == [
+        PyPIReleasePusher(),
+        DockerReleaseBuilder(repository="ghcr.io/example/{name}", push=True),
+    ]
