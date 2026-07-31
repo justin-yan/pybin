@@ -21,4 +21,4 @@ jobs:
 
       # Needed due to: https://github.com/actions/checkout/issues/766
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
-      - run: just register
+      - run: just cicd-register
