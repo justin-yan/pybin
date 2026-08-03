@@ -1,7 +1,7 @@
 source:
   github:
     repository: temporalio/cli
-    version: "1.8.1"
+    version: "1.8.2"
     release_slug: "v{version}/{name}_cli_{version}_{target}.tar.gz"
     targets:
       - darwin_arm64
