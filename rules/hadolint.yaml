@@ -1,7 +1,7 @@
 source:
   github:
     repository: hadolint/hadolint
-    version: "2.14.0"
+    version: "2.15.1"
     release_slug: "v{version}/{name}-{target}"
     targets:
       - macos-arm64
