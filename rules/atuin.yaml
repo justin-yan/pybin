@@ -1,7 +1,7 @@
 source:
   github:
     repository: atuinsh/atuin
-    version: "18.18.1"
+    version: "18.19.0"
     release_slug: "v{version}/{name}-{target}.tar.gz"
     targets:
       - aarch64-apple-darwin
