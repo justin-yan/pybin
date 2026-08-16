@@ -18,7 +18,7 @@ def main() -> None:
     rule = load_rule(rule_path)
     release = rule.source()
     for target in rule.targets:
-        target.push(release)
+        target.build(release)
 
 
 if __name__ == "__main__":
