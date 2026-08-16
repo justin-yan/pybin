@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-from pybin.sync import push
+from pybin.sync import load_rule
 
 
 def main() -> None:
@@ -15,7 +15,10 @@ def main() -> None:
         sys.exit(1)
 
     print(f"Building and pushing from {rule_path}")
-    push(rule_path)
+    rule = load_rule(rule_path)
+    release = rule.source()
+    for target in rule.targets:
+        target.build(release)
 
 
 if __name__ == "__main__":
