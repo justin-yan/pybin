@@ -5,7 +5,7 @@ from platform import machine
 
 import pytest
 
-from pybin.sync import sync
+from pybin.sync import load_rule
 
 pytestmark = pytest.mark.integration
 PROJECT_DIRECTORY = Path(__file__).parents[2]
@@ -20,7 +20,10 @@ def test_rule_builds_installable_wheels(
 ) -> None:
     monkeypatch.chdir(tmp_path)
 
-    sync(rule_path)
+    rule = load_rule(rule_path)
+    release = rule.source()
+    for target in rule.targets:
+        target.build(release)
 
     wheels = sorted(tmp_path.glob("*-dist/*.whl"))
     assert wheels

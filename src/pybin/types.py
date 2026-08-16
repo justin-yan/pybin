@@ -35,7 +35,9 @@ class ReleaseSource(Protocol):
 
 
 class ReleaseTarget(Protocol):
-    def __call__(self, release: Release) -> None: ...
+    def build(self, release: Release) -> None: ...
+
+    def push(self, release: Release) -> None: ...
 
 
 @dataclass(frozen=True)

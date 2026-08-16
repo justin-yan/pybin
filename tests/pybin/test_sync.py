@@ -4,7 +4,7 @@ import pytest
 import yaml
 
 from pybin.registry.github import GithubReleasePuller
-from pybin.registry.pypi import PyPIReleasePusher
+from pybin.registry.pypi import PyPIReleaseTarget
 from pybin.sync import parse_sync_rule
 from pybin.types import SyncRule
 
@@ -28,7 +28,7 @@ def test_parse_sync_rule() -> None:
                 "x86_64-unknown-linux-musl",
             ],
         ),
-        targets=[PyPIReleasePusher()],
+        targets=[PyPIReleaseTarget()],
     )
 
 

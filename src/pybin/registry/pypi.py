@@ -1,3 +1,4 @@
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -6,23 +7,36 @@ from pybin.types import Release
 
 
 @dataclass(frozen=True)
-class PyPIReleasePusher:
-    output_directory: Path | None = None
-
+class PyPIReleaseTarget:
     @classmethod
-    def from_config(cls, config: dict[str, object]) -> "PyPIReleasePusher":
-        output_directory = config.get("output_directory")
-        return cls(output_directory=Path(str(output_directory)) if output_directory is not None else None)
+    def from_config(cls, config: dict[str, object]) -> "PyPIReleaseTarget":
+        return cls()
 
-    def __call__(self, release: Release) -> None:
-        output_directory = self.output_directory or Path(f"{release.name}-dist")
-        output_directory.mkdir(exist_ok=True)
-        packer = WheelPacker(
+    def _packer(self, release: Release) -> WheelPacker:
+        return WheelPacker(
             name=release.name,
             version=release.version,
             license=release.license,
             upstream_url=release.upstream_url,
         )
 
-        for binary in release.binaries:
-            (output_directory / packer.filename(binary)).write_bytes(packer(binary))
+    def _paths(self, release: Release) -> list[Path]:
+        packer = self._packer(release)
+        return [Path(f"{release.name}-dist") / packer.filename(binary) for binary in release.binaries]
+
+    def build(self, release: Release) -> None:
+        packer = self._packer(release)
+        for path, binary in zip(self._paths(release), release.binaries, strict=True):
+            path.parent.mkdir(exist_ok=True)
+            path.write_bytes(packer(binary))
+
+    def push(self, release: Release) -> None:
+        self.build(release)
+        paths = self._paths(release)
+        if not paths:
+            return
+
+        subprocess.run(
+            ["uv", "publish", "--trusted-publishing", "always", *(str(path) for path in paths)],
+            check=True,
+        )
