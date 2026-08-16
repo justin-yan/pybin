@@ -10,3 +10,4 @@ source:
 
 targets:
   - pypi: {}
+  - ghcr: {}

@@ -9,14 +9,12 @@ from pybin.types import Architecture, Binary, Platform, Release
 
 @dataclass(frozen=True)
 class GHCRReleaseTarget:
-    repository: str
-
     @classmethod
     def from_config(cls, config: dict[str, object]) -> "GHCRReleaseTarget":
-        return cls(repository=str(config["repository"]))
+        return cls()
 
     def _repository(self, release: Release) -> str:
-        return self.repository.format(name=release.name)
+        return f"ghcr.io/justin-yan/tool-{release.name}"
 
     def _architecture(self, binary: Binary) -> str:
         return {
@@ -36,7 +34,6 @@ class GHCRReleaseTarget:
             (
                 "FROM scratch",
                 f"COPY --chmod=755 {json.dumps(['binary', destination])}",
-                f"ENTRYPOINT {json.dumps([destination])}",
             )
         )
 

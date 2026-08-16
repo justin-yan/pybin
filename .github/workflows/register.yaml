@@ -9,6 +9,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      packages: write
     container:
       image: ghcr.io/justin-yan/image/cicd-all:0.0.1
       volumes:
@@ -21,4 +22,5 @@ jobs:
 
       # Needed due to: https://github.com/actions/checkout/issues/766
       - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
       - run: just cicd-register
