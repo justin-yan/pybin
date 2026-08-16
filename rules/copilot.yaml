@@ -1,7 +1,7 @@
 source:
   github:
     repository: aws/copilot-cli
-    version: "1.32.1"
+    version: "1.33.0"
     release_slug: "v{version}/{name}_{version}_{target}.tar.gz"
     targets:
       - macOS_arm64
