@@ -34,8 +34,7 @@ def test_parse_sync_rule() -> None:
 
 
 def test_parse_sync_rule_with_multiple_targets() -> None:
-    config = yaml.safe_load((RULES_DIRECTORY / "codex.yaml").read_text())
-    config["targets"] = [{"pypi": {}}, {"ghcr": {}}]
+    config = yaml.safe_load((RULES_DIRECTORY / "atuin.yaml").read_text())
 
     rule = parse_sync_rule(config)
 
