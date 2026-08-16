@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 import yaml
 
+from pybin.registry.ghcr import GHCRReleaseTarget
 from pybin.registry.github import GithubReleasePuller
 from pybin.registry.pypi import PyPIReleaseTarget
 from pybin.sync import parse_sync_rule
@@ -28,8 +29,19 @@ def test_parse_sync_rule() -> None:
                 "x86_64-unknown-linux-musl",
             ],
         ),
-        targets=[PyPIReleaseTarget()],
+        targets=[GHCRReleaseTarget()],
     )
+
+
+def test_parse_sync_rule_with_multiple_targets() -> None:
+    config = yaml.safe_load((RULES_DIRECTORY / "atuin.yaml").read_text())
+
+    rule = parse_sync_rule(config)
+
+    assert rule.targets == [
+        PyPIReleaseTarget(),
+        GHCRReleaseTarget(),
+    ]
 
 
 @pytest.mark.parametrize(

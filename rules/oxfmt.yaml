@@ -13,3 +13,4 @@ source:
 
 targets:
   - pypi: {}
+  - ghcr: {}
