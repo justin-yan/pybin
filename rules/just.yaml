@@ -1,7 +1,7 @@
 source:
   github:
     repository: casey/just
-    version: "1.57.0"
+    version: "1.58.0"
     release_slug: "{version}/{name}-{version}-{target}.tar.gz"
     targets:
       - aarch64-apple-darwin
