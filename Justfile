@@ -117,6 +117,12 @@ testmark MARK="" TARGET=TEST_FOLDER:
 @_register APP_NAME: init (build APP_NAME)
     uv publish --trusted-publishing always {{APP_NAME}}-dist/*
 
+@cicd-register-python:
+    git diff --name-only HEAD^1 HEAD -G"^    version:" "rules/*.yaml" | xargs -n1 basename | sed 's/\.yaml$//' | xargs -I {} sh -c 'just _register-python {}'
+
+@_register-python APP_NAME: init
+    uv run --no-sync python scripts/push_from_yaml.py rules/{{APP_NAME}}.yaml
+
 ######
 ### Custom Commands Section Begin
 ######
