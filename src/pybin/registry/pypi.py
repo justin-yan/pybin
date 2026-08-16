@@ -8,16 +8,9 @@ from pybin.types import Release
 
 @dataclass(frozen=True)
 class PyPIReleaseTarget:
-    output_directory: Path | None = None
-    trusted_publishing: str = "always"
-
     @classmethod
     def from_config(cls, config: dict[str, object]) -> "PyPIReleaseTarget":
-        output_directory = config.get("output_directory")
-        return cls(
-            output_directory=Path(str(output_directory)) if output_directory is not None else None,
-            trusted_publishing=str(config.get("trusted_publishing", "always")),
-        )
+        return cls()
 
     def _packer(self, release: Release) -> WheelPacker:
         return WheelPacker(
@@ -28,9 +21,8 @@ class PyPIReleaseTarget:
         )
 
     def _paths(self, release: Release) -> list[Path]:
-        output_directory = self.output_directory or Path(f"{release.name}-dist")
         packer = self._packer(release)
-        return [output_directory / packer.filename(binary) for binary in release.binaries]
+        return [Path(f"{release.name}-dist") / packer.filename(binary) for binary in release.binaries]
 
     def build(self, release: Release) -> None:
         packer = self._packer(release)
@@ -45,9 +37,6 @@ class PyPIReleaseTarget:
             return
 
         subprocess.run(
-            ["uv", "publish", "--trusted-publishing", self.trusted_publishing, *(str(path) for path in paths)],
+            ["uv", "publish", "--trusted-publishing", "always", *(str(path) for path in paths)],
             check=True,
         )
-
-
-PyPIReleasePusher = PyPIReleaseTarget

@@ -1,7 +1,7 @@
 source:
   github:
     repository: rclone/rclone
-    version: "1.74.4"
+    version: "1.75.0"
     release_slug: "v{version}/{name}-v{version}-{target}.zip"
     targets:
       - osx-arm64

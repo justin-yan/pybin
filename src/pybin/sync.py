@@ -30,23 +30,5 @@ def parse_sync_rule(config: dict[str, object]) -> SyncRule:
     return SyncRule(source=source, targets=targets)
 
 
-def _build(rule: SyncRule) -> None:
-    release = rule.source()
-    for target in rule.targets:
-        target.build(release)
-
-
-def build(path: Path) -> None:
-    rule = parse_sync_rule(yaml.safe_load(path.read_text()))
-    _build(rule)
-
-
-def push(path: Path) -> None:
-    rule = parse_sync_rule(yaml.safe_load(path.read_text()))
-    release = rule.source()
-    for target in rule.targets:
-        target.push(release)
-
-
-def sync(path: Path) -> None:
-    build(path)
+def load_rule(path: Path) -> SyncRule:
+    return parse_sync_rule(yaml.safe_load(path.read_text()))
