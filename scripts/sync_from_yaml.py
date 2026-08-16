@@ -6,7 +6,7 @@ from pybin.sync import load_rule
 
 def main() -> None:
     if len(sys.argv) != 2:
-        print("Usage: python scripts/push_from_yaml.py <rule.yaml>", file=sys.stderr)
+        print("Usage: python scripts/sync_from_yaml.py <rule.yaml>", file=sys.stderr)
         sys.exit(1)
 
     rule_path = Path(sys.argv[1])
