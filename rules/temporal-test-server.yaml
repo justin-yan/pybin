@@ -1,7 +1,7 @@
 source:
   github:
     repository: temporalio/sdk-java
-    version: "1.37.0"
+    version: "1.38.0"
     release_slug: "v{version}/{name}_{version}_{target}.tar.gz"
     targets:
       - macOS_arm64
