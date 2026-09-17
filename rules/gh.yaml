@@ -8,6 +8,8 @@ source:
       - macOS_amd64.zip
       - linux_arm64.tar.gz
       - linux_amd64.tar.gz
+      - windows_arm64.zip
+      - windows_amd64.zip
     bin_name: gh
 
 targets:
