@@ -95,6 +95,8 @@ def test_gh_heterogeneous_case() -> None:
             "macOS_amd64.zip",
             "linux_arm64.tar.gz",
             "linux_amd64.tar.gz",
+            "windows_arm64.zip",
+            "windows_amd64.zip",
         ],
         bin_name="gh",
     )()
@@ -107,15 +109,21 @@ def test_gh_heterogeneous_case() -> None:
         Architecture.X86_64,
         Architecture.ARM64,
         Architecture.X86_64,
+        Architecture.ARM64,
+        Architecture.X86_64,
     ]
     assert [binary.platform for binary in release.binaries] == [
         Platform.MACOS,
         Platform.MACOS,
         Platform.LINUX,
         Platform.LINUX,
+        Platform.WINDOWS,
+        Platform.WINDOWS,
     ]
     assert release.binaries[2].content.startswith(b"\x7fELF")
     assert release.binaries[3].content.startswith(b"\x7fELF")
+    assert release.binaries[4].content.startswith(b"MZ")
+    assert release.binaries[5].content.startswith(b"MZ")
     assert all(len(binary.content) >= 250_000 for binary in release.binaries)
 
 

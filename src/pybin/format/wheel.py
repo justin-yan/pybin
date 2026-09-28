@@ -12,6 +12,7 @@ from pybin.platform_tags import (
     LINUX_X86,
     MACOS_ARM,
     MACOS_X86,
+    WIN_ARM,
     WIN_X86,
 )
 from pybin.types import Architecture, Binary, Platform
@@ -40,6 +41,7 @@ class WheelPacker:
             (Platform.MACOS, Architecture.X86_64): MACOS_X86,
             (Platform.MACOS, Architecture.ARM64): MACOS_ARM,
             (Platform.WINDOWS, Architecture.X86_64): WIN_X86,
+            (Platform.WINDOWS, Architecture.ARM64): WIN_ARM,
         }
 
         try:

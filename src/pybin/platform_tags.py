@@ -22,3 +22,4 @@ MACOS_ARM = "macosx_11_0_arm64"  # Big Sur first version to support apple silico
 MACOS_UNIVERSAL = "macosx_11_0_universal2"  # Big Sur first version to support apple silicon
 
 WIN_X86 = "win_amd64"
+WIN_ARM = "win_arm64"

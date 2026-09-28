@@ -20,6 +20,7 @@ from pybin.types import Architecture, Binary, Platform
         (Platform.MACOS, Architecture.X86_64, "macosx_10_9_x86_64", "example-tool", 3),
         (Platform.MACOS, Architecture.ARM64, "macosx_11_0_arm64", "example-tool", 3),
         (Platform.WINDOWS, Architecture.X86_64, "win_amd64", "example-tool.exe", 0),
+        (Platform.WINDOWS, Architecture.ARM64, "win_arm64", "example-tool.exe", 0),
     ],
 )
 def test_packs_platform_binary(
