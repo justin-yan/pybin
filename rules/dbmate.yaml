@@ -1,7 +1,7 @@
 source:
   github:
     repository: amacneil/dbmate
-    version: "2.36.0"
+    version: "2.37.0"
     release_slug: "v{version}/{name}-{target}"
     targets:
       - macos-arm64
